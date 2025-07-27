@@ -97,49 +97,11 @@ class EventsHandler {
     }
 
     /**
-     * Add navigation controls for event banner
+     * Add navigation controls for event banner - Now removed for automatic rotation only
      */
     addNavigationControls() {
-        const navControls = document.createElement('div');
-        navControls.className = 'event-navigation';
-        
-        // Previous button
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'event-nav prev';
-        prevBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m15 18-6-6 6-6"/>
-            </svg>
-        `;
-        prevBtn.addEventListener('click', () => this.navigateEvent('prev'));
-        
-        // Next button
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'event-nav next';
-        nextBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m9 18 6-6-6-6"/>
-            </svg>
-        `;
-        nextBtn.addEventListener('click', () => this.navigateEvent('next'));
-        
-        // Indicators
-        const indicators = document.createElement('div');
-        indicators.className = 'event-indicators';
-        
-        this.events.forEach((_, index) => {
-            const indicator = document.createElement('button');
-            indicator.className = `event-indicator ${index === 0 ? 'active' : ''}`;
-            indicator.dataset.index = index;
-            indicator.addEventListener('click', () => this.goToEvent(index));
-            indicators.appendChild(indicator);
-        });
-        
-        navControls.appendChild(prevBtn);
-        navControls.appendChild(indicators);
-        navControls.appendChild(nextBtn);
-        
-        this.eventBannerContainer.appendChild(navControls);
+        // Navigation controls removed as requested
+        // Auto-rotation will still work
     }
 
     /**
@@ -180,15 +142,7 @@ class EventsHandler {
             }
         });
         
-        // Update indicators
-        const indicators = this.eventBannerContainer.querySelectorAll('.event-indicator');
-        indicators.forEach((indicator, i) => {
-            if (i === index) {
-                indicator.classList.add('active');
-            } else {
-                indicator.classList.remove('active');
-            }
-        });
+        // No indicators to update since they've been removed
     }
 
     /**

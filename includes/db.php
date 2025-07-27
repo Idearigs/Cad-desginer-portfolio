@@ -3,11 +3,18 @@
  * Database connection file for Digital CAD Atelier
  */
 
+
+// $db_host = 'localhost';
+// $db_name = 'digital_cad_atelier';
+// $db_user = 'root';
+// $db_pass = '';
+
+
 // Database configuration
-$db_host = 'localhost';
-$db_name = 'digital_cad_atelier';
-$db_user = 'root';
-$db_pass = '';
+$db_host = 'server119.web-hosting.com';
+$db_name = 'chamodio_caddb';
+$db_user = 'chamodio_root';
+$db_pass = '#caddesignerdb#2025';
 
 // PDO connection options
 $options = [

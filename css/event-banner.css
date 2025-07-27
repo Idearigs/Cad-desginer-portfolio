@@ -5,14 +5,23 @@
     position: relative;
 }
 
+.event-banner-section .section-header {
+    text-align: left;
+}
+
+.event-banner-section .section-header h2 {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: 1rem;
+}
+
 .event-banner {
     position: relative;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 2rem 0;
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    height: 400px;
+    height: 500px;
 }
 
 @media (max-width: 768px) {
@@ -64,11 +73,12 @@
 }
 
 .event-details h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.75rem;
-    font-weight: 400;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
     margin-bottom: 0.5rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
 }
 
 .event-details p {
@@ -114,17 +124,9 @@
     opacity: 0.8;
 }
 
-/* Event Navigation */
+/* Event Navigation - Hidden as requested */
 .event-navigation {
-    position: absolute;
-    bottom: 1rem;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
-    z-index: 10;
+    display: none;
 }
 
 .event-nav {

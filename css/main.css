@@ -46,13 +46,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-header h2 {
-    font-family: 'PP Fragment Serif Thin', serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: #c9c9c9;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    color: #e5e5e5;
     margin-bottom: 0.5rem;
     font-weight: 300;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
+    opacity: 0.85;
 }
 
 .section-divider {

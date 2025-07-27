@@ -102,13 +102,14 @@
 }
 
 .hero-title {
-    font-family: 'PP Fragment Serif Thin', serif;
-    font-size: clamp(2rem, 8vw, 4.5rem);
-    font-weight: 100;
-    color: #d3d3d3;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 300;
+    color: #ffffff;
     letter-spacing: 0.25em;
     line-height: 1;
     text-transform: uppercase;
+    opacity: 0.95;
 }
 
 @media (min-width: 640px) {
@@ -523,13 +524,14 @@
 }
 
 .project-info h3 {
-    font-family: 'PP Fragment Serif Thin', serif;
-    font-size: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
     font-weight: 300;
     letter-spacing: 0.2em;
-    color: #c9c9c9;
+    color: #ffffff;
     text-transform: uppercase;
     margin-bottom: 0.25rem;
+    opacity: 0.95;
 }
 
 @media (min-width: 640px) {
