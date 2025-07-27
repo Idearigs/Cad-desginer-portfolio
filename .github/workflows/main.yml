@@ -1,0 +1,33 @@
+
+# Deploy to Client VPS (Graneoth)
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main  # Run this workflow when code is pushed to 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH using Password
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.VPS_HOST }}         # Set to 162.213.255.48
+          username: ${{ secrets.VPS_USER }}      # Set to graneoth
+          password: ${{ secrets.VPS_PASSWORD }}  # SSH password
+          port: 21098                               # Default SSH port (adjust if needed)
+          script: |
+            echo "✅ Connected to server. Navigating to project directory..."
+            cd /home/chamodio/public_html
+            echo "📦 Pulling latest changes from GitHub..."
+            git config --global user.name "Minuka2022"
+            git config --global user.email "minukadev404@gmail.com"
+            git fetch origin main
+            git reset --hard origin/main
+            echo "🚀 Deployment successful!"
