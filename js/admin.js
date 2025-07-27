@@ -8,7 +8,27 @@ class AdminDashboard {
         this.events = [];
         this.galleryImages = [];
         
+        // Determine API base URL based on environment
+        this.apiBaseUrl = this.getApiBaseUrl();
+        console.log('API Base URL:', this.apiBaseUrl);
+        
         this.init();
+    }
+    
+    // Helper function to determine API base URL based on environment
+    getApiBaseUrl() {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        const pathname = window.location.pathname;
+        
+        // Check if we're on localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return origin + '/jewellery-designer/cad-art/api';
+        }
+        
+        // Production environment - based on the error message, we need to include the full path
+        // The error shows that the server is looking for /jewellery-designer/cad-art/api/
+        return origin + '/jewellery-designer/cad-art/api';
     }
 
     init() {
@@ -27,13 +47,20 @@ class AdminDashboard {
         // Get the authentication token
         const token = localStorage.getItem('adminToken');
         
-        // Convert relative URL to absolute URL
-        const baseUrl = window.location.origin;
-        // If url starts with / or api/, make it absolute
-        if (url.startsWith('/')) {
-            url = `${baseUrl}${url}`;
-        } else if (url.startsWith('api/')) {
-            url = `${baseUrl}/${url}`;
+        // Handle relative paths by prepending the API base URL
+        if (!url.startsWith('http')) {
+            // Remove leading slash if present
+            if (url.startsWith('/')) {
+                url = url.substring(1);
+            }
+            
+            // Remove 'api/' prefix if present since it's already in the base URL
+            if (url.startsWith('api/')) {
+                url = url.substring(4);
+            }
+            
+            // Construct full URL
+            url = `${this.apiBaseUrl}/${url}`;
         }
         
         console.log('API Request URL:', url);
@@ -80,11 +107,10 @@ class AdminDashboard {
         
         try {
             // Verify session with backend using our helper
-            const baseUrl = window.location.origin;
-            const apiUrl = `${baseUrl}/api/news/index.php`;
-            console.log('Auth check URL:', apiUrl);
+            const authCheckUrl = `${this.apiBaseUrl}/news/index.php`;
+            console.log('Auth check URL:', authCheckUrl);
             
-            const response = await this.apiRequest(apiUrl, {
+            const response = await this.apiRequest(authCheckUrl, {
                 method: 'GET'
             });
             
@@ -239,13 +265,11 @@ class AdminDashboard {
             formData.append('username', username);
             formData.append('password', password);
             
-            // Send login request to backend
-            // Use absolute URL for live server compatibility
-            const baseUrl = window.location.origin;
-            const apiUrl = `${baseUrl}/api/auth/login.php`;
-            console.log('Login API URL:', apiUrl);
+            // Send login request to backend using the determined API base URL
+            const loginUrl = `${this.apiBaseUrl}/auth/login.php`;
+            console.log('Login API URL:', loginUrl);
             
-            const response = await fetch(apiUrl, {
+            const response = await fetch(loginUrl, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include' // Include cookies for session
@@ -283,9 +307,8 @@ class AdminDashboard {
 
     async handleLogout() {
         try {
-            // Call logout API with absolute URL
-            const baseUrl = window.location.origin;
-            const logoutUrl = `${baseUrl}/api/auth/logout.php`;
+            // Call logout API using the determined API base URL
+            const logoutUrl = `${this.apiBaseUrl}/auth/logout.php`;
             console.log('Logout URL:', logoutUrl);
             
             const response = await fetch(logoutUrl, {
@@ -374,7 +397,7 @@ class AdminDashboard {
     // News Management
     async loadArticles() {
         try {
-            const response = await this.apiRequest('/jewellery-designer/cad-art/api/news/index.php', {
+            const response = await this.apiRequest('news/index.php', {
                 method: 'GET'
             });
             
@@ -532,7 +555,7 @@ class AdminDashboard {
 
     async editArticle(id) {
         try {
-            const response = await this.apiRequest(`/jewellery-designer/cad-art/api/news/index.php?id=${id}`, {
+            const response = await this.apiRequest(`news/index.php?id=${id}`, {
                 method: 'GET'
             });
             
@@ -621,7 +644,7 @@ class AdminDashboard {
         }
         
         try {
-            let url = '/jewellery-designer/cad-art/api/events/index.php';
+            let url = `${this.apiBaseUrl}/events/index.php`;
             let method = 'POST';
             
             // If editing, add the event ID to the URL but keep using POST
@@ -652,7 +675,7 @@ class AdminDashboard {
 
     async loadEvents() {
         try {
-            const response = await this.apiRequest('/jewellery-designer/cad-art/api/events/index.php', {
+            const response = await this.apiRequest('events/index.php', {
                 method: 'GET'
             });
             
@@ -973,7 +996,7 @@ class AdminDashboard {
     async loadGallery() {
         try {
             // Load all gallery images using our helper
-            const response = await this.apiRequest('/jewellery-designer/cad-art/api/gallery/index.php', {
+            const response = await this.apiRequest('gallery/index.php', {
                 method: 'GET'
             });
             
