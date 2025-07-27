@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Digital CAD Atelier</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-primary text-text">
+    <!-- Login Modal (initially hidden) -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon">
+                        <i data-lucide="shield"></i>
+                    </div>
+                    <h1 class="login-title">Admin Login</h1>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div id="loginError" class="error-alert" style="display: none;"></div>
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Login</span>
+                        <span class="btn-loading" style="display: none;">
+                            <i data-lucide="loader-2" class="animate-spin"></i>
+                        </span>
+                    </button>
+                </form>
+                <div class="login-footer">
+                    Use your admin credentials to login
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (initially hidden) -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-content">
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <button id="logoutBtn" class="logout-btn">
+                    <i data-lucide="log-out"></i>
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Tabs Navigation -->
+            <div class="tabs-container">
+                <div class="tabs-list">
+                    <button class="tab-trigger active" data-tab="news">News Management</button>
+                    <button class="tab-trigger" data-tab="events">Event Management</button>
+                    <button class="tab-trigger" data-tab="gallery">Gallery Management</button>
+                </div>
+
+                <!-- News Management Tab -->
+                <div id="newsTab" class="tab-content active">
+                    <div class="management-section">
+                        <div class="section-header">
+                            <h2>News Management</h2>
+                            <button class="btn-primary" id="addNewsBtn">
+                                <i data-lucide="plus"></i>
+                                Add Article
+                            </button>
+                        </div>
+
+                        <!-- News Form Modal (initially hidden) -->
+                        <div id="newsFormModal" class="modal-overlay">
+                            <div class="modal-container">
+                                <div id="newsForm" class="form-card">
+                                    <div class="form-header">
+                                        <h3 id="newsFormTitle">Add New Article</h3>
+                                        <button class="btn-close" id="closeNewsForm">
+                                            <i data-lucide="x"></i>
+                                        </button>
+                                    </div>
+                            <form id="articleForm">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="articleTitle">Title *</label>
+                                        <input type="text" id="articleTitle" name="title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="articleAuthor">Author</label>
+                                        <input type="text" id="articleAuthor" name="author">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="articlePublication">Publication</label>
+                                        <input type="text" id="articlePublication" name="publication">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="articleDate">Date</label>
+                                        <input type="date" id="articleDate" name="date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="articleContent">Content *</label>
+                                    <textarea id="articleContent" name="content" rows="6" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="articleImage">Image</label>
+                                    <input type="file" id="articleImage" name="image" accept="image/*">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-secondary" id="cancelArticle">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save Article</button>
+                                </div>
+                            </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Articles List -->
+                        <div class="articles-grid" id="articlesList">
+                            <!-- Articles will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Events Management Tab -->
+                <div id="eventsTab" class="tab-content">
+                    <div class="management-section">
+                        <div class="section-header">
+                            <h2>Event Banner Management</h2>
+                            <button class="btn-primary" id="addEventBtn">
+                                <i data-lucide="plus"></i>
+                                Add Banner
+                            </button>
+                        </div>
+
+                        <!-- Event Form Modal (initially hidden) -->
+                        <div id="eventFormModal" class="modal-overlay">
+                            <div class="modal-container">
+                                <div id="eventForm" class="form-card">
+                                    <div class="form-header">
+                                        <h3 id="eventFormTitle">Add New Event Banner</h3>
+                                        <button class="btn-close" id="closeEventForm">
+                                            <i data-lucide="x"></i>
+                                        </button>
+                                    </div>
+                            <form id="eventFormElement">
+                                <div class="form-group">
+                                    <label for="eventTitle">Banner Title *</label>
+                                    <input type="text" id="eventTitle" name="title" required placeholder="Title for the event banner">
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventDate">Date</label>
+                                    <input type="date" id="eventDate" name="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventImage">Banner Image *</label>
+                                    <input type="file" id="eventImage" name="image" accept="image/*">
+                                    <div class="form-help">Recommended size: 1200×500 pixels</div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-secondary" id="cancelEvent">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save Banner</button>
+                                </div>
+                            </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Events List -->
+                        <div class="events-grid" id="eventsList">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Management Tab -->
+                <div id="galleryTab" class="tab-content">
+                    <div class="management-section">
+                        <div class="section-header">
+                            <h2>Gallery Management</h2>
+                            <button class="btn-primary" id="addGalleryBtn">
+                                <i data-lucide="plus"></i>
+                                Add Images
+                            </button>
+                        </div>
+
+                        <!-- Gallery Form Modal (initially hidden) -->
+                        <div id="galleryFormModal" class="modal-overlay">
+                            <div class="modal-container">
+                                <div id="galleryForm" class="form-card">
+                                    <div class="form-header">
+                                        <h3>Add Gallery Images</h3>
+                                        <button class="btn-close" id="closeGalleryForm">
+                                            <i data-lucide="x"></i>
+                                        </button>
+                                    </div>
+                            <form id="galleryFormElement">
+                                <div class="form-group">
+                                    <label for="galleryTitle">Image Title *</label>
+                                    <input type="text" id="galleryTitle" name="title" required placeholder="Enter image title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="galleryImages">Select Images *</label>
+                                    <input type="file" id="galleryImages" name="images" accept="image/*" multiple required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-secondary" id="cancelGallery">Cancel</button>
+                                    <button type="submit" class="btn-primary">Upload Images</button>
+                                </div>
+                            </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Grid -->
+                        <div class="gallery-grid" id="galleryList">
+                            <!-- Gallery images will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End of Tab Content -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="alertContainer" class="alert-container"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

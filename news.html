@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - Digital CAD Atelier</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/news.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navigation" class="nav-transparent">
+        <div class="nav-container">
+            <!-- Top utility bar -->
+          
+           
+
+            <!-- Main navigation with centered logo -->
+            <div class="nav-main">
+                <!-- Logo -->
+                <div class="nav-logo">
+                    <img src="./images/chamal-logo.png" alt="Chamal Jayaratna Logo" onclick="scrollToSection('hero')">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="nav-menu desktop-menu">
+                    <button onclick="window.location.href='index.html'">HOME</button>
+                    <button onclick="window.location.href='index.html#icons'">PORTFOLIO</button>
+                    <button onclick="window.location.href='index.html#work'">WORKS</button>
+                    <button onclick="window.location.href='gallery.html'">GALLERY</button>
+                    <button onclick="window.location.href='news.html'">NEWS</button>
+                    <button onclick="window.location.href='index.html#contact'">CONTACT</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span class="menu-icon">☰</span>
+                    <span class="close-icon">✕</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <button onclick="window.location.href='index.html'">Home</button>
+                <button onclick="window.location.href='index.html#icons'">Portfolio</button>
+                <button onclick="window.location.href='index.html#work'">Works</button>
+                <button onclick="window.location.href='gallery.html'">Gallery</button>
+                <button onclick="window.location.href='news.html'">News</button>
+                <button onclick="window.location.href='index.html#contact'">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- News Section -->
+    <section id="news" class="news-section">
+        <div class="container">
+            <div class="news-header">
+                <h2>News</h2>
+                <div class="section-divider"></div>
+                <p>Latest updates and insights</p>
+            </div>
+
+            <div class="news-grid">
+                <!-- News Card 1 -->
+                <div class="news-card">
+                    <div class="news-img-container">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&h=500" alt="Jewelry Design Award">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">June 15, 2025</span>
+                        <h3>International Design Excellence Award</h3>
+                        <p>Our signature collection received the prestigious International Design Excellence Award for innovative use of materials and craftsmanship.</p>
+                        <a href="#" class="news-link">Read More <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+
+                <!-- News Card 2 -->
+                
+            </div>
+            
+            <div class="footer">
+                <p>© 2024 idearigs.com. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/news.js"></script>
+</body>
+</html>

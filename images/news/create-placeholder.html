@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Award Ceremony Image</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        p {
+            max-width: 600px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="imageCanvas" width="1200" height="800"></canvas>
+    <button id="downloadBtn">Download Image</button>
+    <p>This creates a placeholder image for the award ceremony. Click the button to download it, then move it to the images/news folder with the name award-ceremony.jpg</p>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#0a0a0a');
+            gradient.addColorStop(1, '#1a1a1a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add some luxury elements
+            // Stage
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, canvas.height - 300, canvas.width, 300);
+            
+            // Podium
+            ctx.fillStyle = '#333';
+            ctx.fillRect(canvas.width/2 - 150, canvas.height - 300, 300, 50);
+            
+            // Award trophy
+            ctx.fillStyle = '#d4af37'; // Gold color
+            
+            // Trophy base
+            ctx.fillRect(canvas.width/2 - 40, canvas.height - 450, 80, 20);
+            
+            // Trophy stem
+            ctx.fillRect(canvas.width/2 - 10, canvas.height - 550, 20, 100);
+            
+            // Trophy cup
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 50, canvas.height - 550);
+            ctx.lineTo(canvas.width/2 + 50, canvas.height - 550);
+            ctx.lineTo(canvas.width/2 + 30, canvas.height - 600);
+            ctx.lineTo(canvas.width/2 - 30, canvas.height - 600);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Spotlight effects
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2, 0);
+            ctx.lineTo(canvas.width/2 - 300, canvas.height);
+            ctx.lineTo(canvas.width/2 + 300, canvas.height);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Add some decorative elements
+            for (let i = 0; i < 30; i++) {
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.1})`;
+                ctx.beginPath();
+                ctx.arc(
+                    Math.random() * canvas.width, 
+                    Math.random() * canvas.height, 
+                    Math.random() * 5 + 1, 
+                    0, 
+                    Math.PI * 2
+                );
+                ctx.fill();
+            }
+            
+            // Add text
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('International Design Excellence Award', canvas.width/2, 100);
+            
+            ctx.fillStyle = '#aaa';
+            ctx.font = '32px Arial';
+            ctx.fillText('Innovative Use of Materials in Jewelry Design', canvas.width/2, 160);
+            
+            ctx.fillStyle = '#888';
+            ctx.font = '24px Arial';
+            ctx.fillText('Milan Design Week 2025', canvas.width/2, 220);
+            
+            // People silhouettes
+            ctx.fillStyle = '#222';
+            for (let i = 0; i < 10; i++) {
+                const x = 100 + i * 110;
+                const height = 120 + Math.random() * 40;
+                // Head
+                ctx.beginPath();
+                ctx.arc(x, canvas.height - 300 - height + 20, 20, 0, Math.PI * 2);
+                ctx.fill();
+                // Body
+                ctx.fillRect(x - 15, canvas.height - 300 - height + 40, 30, height - 40);
+            }
+            
+            // Download functionality
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.download = 'award-ceremony.jpg';
+                link.href = canvas.toDataURL('image/jpeg', 0.8);
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>

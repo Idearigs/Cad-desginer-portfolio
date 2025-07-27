@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Digital CAD Atelier</title>
+    <meta name="description" content="Explore our gallery of precision engineering and CAD design projects" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navigation" class="nav-transparent">
+        <div class="nav-container">
+            <!-- Main navigation with centered logo -->
+            <div class="nav-main">
+                <!-- Logo -->
+                <div class="nav-logo">
+                    <img src="./images/chamal-logo.png" alt="Chamal Jayaratna Logo" onclick="window.location.href='index.html'">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="nav-menu desktop-menu">
+                    <button onclick="window.location.href='index.html'">HOME</button>
+                    <button onclick="window.location.href='index.html#icons'">PORTFOLIO</button>
+                    <button onclick="window.location.href='index.html#work'">WORKS</button>
+                    <button onclick="window.location.href='gallery.html'" class="active">GALLERY</button>
+                    <button onclick="window.location.href='news.html'">NEWS</button>
+                    <button onclick="window.location.href='index.html#contact'">CONTACT</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span class="menu-icon">☰</span>
+                    <span class="close-icon">✕</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <button onclick="window.location.href='index.html'">Home</button>
+                <button onclick="window.location.href='index.html#icons'">Portfolio</button>
+                <button onclick="window.location.href='index.html#work'">Works</button>
+                <button onclick="window.location.href='gallery.html'" class="active">Gallery</button>
+                <button onclick="window.location.href='news.html'">News</button>
+                <button onclick="window.location.href='index.html#contact'">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section" style="margin-top: 120px;">
+        <div class="container">
+            <div class="gallery-header">
+                <h2>Gallery</h2>
+                <div class="section-divider"></div>
+                
+            </div>
+            
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Automotive Projects -->
+                <div class="gallery-item" data-category="automotive" onclick="openModal(this)">
+                    <div class="gallery-image">
+                        <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&h=600" alt="Automotive Engine Design">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Automotive Engine Design</h3>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+
+            <!-- Load More Button removed -->
+        </div>
+    </section>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="">
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+                <span id="modalCategory" class="modal-category"></span>
+                <div class="modal-details">
+                    <div class="detail-item">
+                        <strong>Project Type:</strong>
+                        <span id="modalType">CAD Design</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Completion Date:</strong>
+                        <span id="modalDate">2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Client:</strong>
+                        <span id="modalClient">Confidential</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Tools Used:</strong>
+                        <span id="modalTools">SolidWorks, AutoCAD, KeyShot</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary">Download CAD Files</button>
+                    <button class="btn-primary">Request Quote</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation arrows -->
+        <button class="modal-nav prev" onclick="previousImage()">‹</button>
+        <button class="modal-nav next" onclick="nextImage()">›</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 idearigs.com. All rights reserved.</p>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/gallery-api.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>
