@@ -27,6 +27,17 @@ class AdminDashboard {
         // Get the authentication token
         const token = localStorage.getItem('adminToken');
         
+        // Convert relative URL to absolute URL
+        const baseUrl = window.location.origin;
+        // If url starts with / or api/, make it absolute
+        if (url.startsWith('/')) {
+            url = `${baseUrl}${url}`;
+        } else if (url.startsWith('api/')) {
+            url = `${baseUrl}/${url}`;
+        }
+        
+        console.log('API Request URL:', url);
+        
         // Set up default options
         const defaultOptions = {
             credentials: 'include',
@@ -69,7 +80,11 @@ class AdminDashboard {
         
         try {
             // Verify session with backend using our helper
-            const response = await this.apiRequest('/jewellery-designer/cad-art/api/news/index.php', {
+            const baseUrl = window.location.origin;
+            const apiUrl = `${baseUrl}/api/news/index.php`;
+            console.log('Auth check URL:', apiUrl);
+            
+            const response = await this.apiRequest(apiUrl, {
                 method: 'GET'
             });
             
@@ -225,7 +240,12 @@ class AdminDashboard {
             formData.append('password', password);
             
             // Send login request to backend
-            const response = await fetch('/jewellery-designer/cad-art/api/auth/login.php', {
+            // Use absolute URL for live server compatibility
+            const baseUrl = window.location.origin;
+            const apiUrl = `${baseUrl}/api/auth/login.php`;
+            console.log('Login API URL:', apiUrl);
+            
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include' // Include cookies for session
@@ -263,8 +283,12 @@ class AdminDashboard {
 
     async handleLogout() {
         try {
-            // Call logout API
-            const response = await fetch('/jewellery-designer/cad-art/api/auth/logout.php', {
+            // Call logout API with absolute URL
+            const baseUrl = window.location.origin;
+            const logoutUrl = `${baseUrl}/api/auth/logout.php`;
+            console.log('Logout URL:', logoutUrl);
+            
+            const response = await fetch(logoutUrl, {
                 method: 'POST',
                 credentials: 'include' // Include cookies for session
             });

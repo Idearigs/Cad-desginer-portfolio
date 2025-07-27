@@ -1,0 +1,4 @@
+[27-Jul-2025 21:49:41 Europe/Berlin] PHP Warning:  session_start(): open(C:\xampp\tmp\sess_88f1iq130ipqckshg4g86se76p, O_RDWR) failed: Permission denied (13) in C:\xampp\htdocs\jewellery-designer\cad-art\includes\config.php on line 8
+[27-Jul-2025 21:49:41 Europe/Berlin] PHP Warning:  session_start(): Failed to read session data: files (path: C:\xampp\tmp) in C:\xampp\htdocs\jewellery-designer\cad-art\includes\config.php on line 8
+[27-Jul-2025 21:49:48 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [2002] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+[27-Jul-2025 21:50:02 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [2002] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
