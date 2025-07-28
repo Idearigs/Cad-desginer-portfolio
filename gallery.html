@@ -15,44 +15,77 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <!-- Luxury Design System -->
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/luxury.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Original Navigation with Mobile Enhancement -->
     <nav id="navigation" class="nav-transparent">
         <div class="nav-container">
-            <!-- Main navigation with centered logo -->
+            <!-- Utility Bar -->
+            
+            <!-- Main Navigation -->
             <div class="nav-main">
-                <!-- Logo -->
                 <div class="nav-logo">
-                    <img src="./images/chamal-logo.png" alt="Chamal Jayaratna Logo" onclick="window.location.href='index.html'">
+                    <img src="images\chamal-logo.png" alt="Chamal Jayaratna CAD Designer" onclick="window.location.href='index.html'">
                 </div>
-
+                
                 <!-- Desktop Menu -->
                 <div class="nav-menu desktop-menu">
-                    <button onclick="window.location.href='index.html'">HOME</button>
-                    <button onclick="window.location.href='index.html#icons'">PORTFOLIO</button>
-                    <button onclick="window.location.href='index.html#work'">WORKS</button>
-                    <button onclick="window.location.href='gallery.html'" class="active">GALLERY</button>
-                    <button onclick="window.location.href='news.html'">NEWS</button>
-                    <button onclick="window.location.href='index.html#contact'">CONTACT</button>
+                    <button onclick="window.location.href='index.html'">Home</button>
+                    <button onclick="window.location.href='index.html#about'">About</button>
+                    <button onclick="window.location.href='index.html#signature'">Collections</button>
+                    <button onclick="window.location.href='gallery.html'" class="active">Gallery</button>
+                    <button onclick="window.location.href='news.html'">News</button>
+                    <button onclick="window.location.href='index.html#contact'">Contact</button>
                 </div>
-
+                
                 <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <span class="menu-icon">☰</span>
-                    <span class="close-icon">✕</span>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open navigation menu">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </button>
             </div>
+        </div>
+        
+        <!-- Mobile Drawer -->
+        <div id="mobileDrawer" class="mobile-drawer" role="navigation" aria-label="Main navigation">
+            <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+            <div class="mobile-drawer-content">
+                <!-- Drawer Header -->
+                <div class="mobile-drawer-header">
+                    <div class="mobile-drawer-logo">
+                        <img src="images/chamal-logo.png" alt="Chamal Jayaratna CAD Designer" width="150px">
+                    </div>
+                    <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">×</button>
+                </div>
 
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobileMenu">
-                <button onclick="window.location.href='index.html'">Home</button>
-                <button onclick="window.location.href='index.html#icons'">Portfolio</button>
-                <button onclick="window.location.href='index.html#work'">Works</button>
-                <button onclick="window.location.href='gallery.html'" class="active">Gallery</button>
-                <button onclick="window.location.href='news.html'">News</button>
-                <button onclick="window.location.href='index.html#contact'">Contact</button>
+                <!-- Navigation Menu -->
+                <div class="mobile-nav">
+                    <a href="index.html" class="mobile-nav-link">Home</a>
+                    <a href="index.html#about" class="mobile-nav-link">About</a>
+                    <a href="index.html#signature" class="mobile-nav-link">Collections</a>
+                    <a href="gallery.html" class="mobile-nav-link active">Gallery</a>
+                    <a href="news.html" class="mobile-nav-link">News</a>
+                    <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+                </div>
+
+                <!-- Drawer Footer -->
+                <div class="mobile-drawer-footer">
+                    <div class="mobile-contact-info">
+                        <p>For inquiries and consultations</p>
+                        <p><a href="mailto:hello@chamaljayaratna.com">hello@chamaljayaratna.com</a></p>
+                        <p><a href="tel:+94123456789">+94 123 456 789</a></p>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -129,16 +162,44 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer">
-        <p>© 2024 idearigs.com. All rights reserved.</p>
-    </div>
-
-    <!-- Toast Container -->
-    <div id="toastContainer" class="toast-container"></div>
+   <footer class="lx-footer">
+        <div class="lx-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="images/chamal-logo.png" alt="Chamal Jayaratna Logo" class="footer-logo-img" width="200px">
+                        
+                    </div>
+                </div>
+                
+                <div class="footer-info">
+                    <div class="footer-section">
+                        <h4>Studio</h4>
+                        <p>Colombo, Sri Lanka<br>
+                        By appointment only</p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact</h4>
+                        <p><a href="mailto:hello@chamaljayaratna.com">hello@chamaljayaratna.com</a><br>
+                        <a href="tel:+94123456789">+94 123 456 789</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Chamal Jayaratna. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
-    <script src="js/gallery-api.js"></script>
     <script src="js/gallery.js"></script>
+    <script src="js/mobile-nav.js"></script>
 </body>
 </html>

@@ -1,0 +1,380 @@
+/* ================================================================
+   PREMIUM MOBILE NAVIGATION DRAWER
+   Luxury jewelry brand mobile navigation (≤1024px only)
+   Does NOT affect desktop navigation styling
+   ================================================================ */
+
+/* ================================================================
+   MOBILE TOGGLE BUTTON
+   ================================================================ */
+.mnav__toggle {
+  /* Only visible on mobile/tablet */
+  display: none;
+  
+  /* Button styling */
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  cursor: pointer;
+  
+  /* Positioning */
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  
+  /* Transitions */
+  transition: all var(--transition-smooth);
+}
+
+.mnav__toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.mnav__toggle:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* Hamburger Icon */
+.mnav__icon {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: all var(--transition-smooth);
+}
+
+.mnav__icon::before,
+.mnav__icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: all var(--transition-smooth);
+}
+
+.mnav__icon::before {
+  top: -6px;
+}
+
+.mnav__icon::after {
+  top: 6px;
+}
+
+/* Active State - Transform to X */
+.mnav__toggle[aria-expanded=\"true\"] .mnav__icon {
+  background: transparent;
+}
+
+.mnav__toggle[aria-expanded=\"true\"] .mnav__icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.mnav__toggle[aria-expanded=\"true\"] .mnav__icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+/* ================================================================
+   MOBILE NAVIGATION PANEL
+   ================================================================ */
+.mnav__panel {
+  /* Hidden by default */
+  display: none;
+  
+  /* Full screen overlay */
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  
+  /* Prevent scrolling behind */
+  overflow: hidden;
+}
+
+.mnav__panel:not([hidden]) {
+  display: block;
+}
+
+/* Backdrop with blur */
+.mnav__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity var(--transition-drawer);
+  cursor: pointer;
+}
+
+.mnav__panel:not([hidden]) .mnav__backdrop {
+  opacity: 1;
+}
+
+/* ================================================================
+   NAVIGATION SHEET
+   ================================================================ */
+.mnav__sheet {
+  position: fixed;
+  inset-block: var(--space-xl);
+  inset-inline: var(--space-lg);
+  max-inline-size: 520px;
+  margin-inline: auto;
+  
+  /* Premium styling */
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, #1B1B1F 0%, #141416 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-xl);
+  
+  /* Content layout */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  /* Animation */
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition: all var(--transition-drawer);
+}
+
+.mnav__panel:not([hidden]) .mnav__sheet {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ================================================================
+   SHEET HEADER
+   ================================================================ */
+.mnav__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl) var(--space-xl) var(--space-lg);
+  border-bottom: 1px solid var(--line);
+}
+
+.mnav__brand {
+  height: 32px;
+  width: auto;
+  opacity: 0.9;
+}
+
+.mnav__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mnav__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.mnav__close:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+   NAVIGATION LIST
+   ================================================================ */
+.mnav__divider {
+  border: none;
+  height: 1px;
+  background: var(--line);
+  margin: 0;
+}
+
+.mnav__list {
+  flex: 1;
+  margin: 0;
+  padding: var(--space-sm) 0 var(--space-xl);
+  overflow-y: auto;
+}
+
+.mnav__list li {
+  margin: 0;
+}
+
+.mnav__link {
+  display: flex;
+  align-items: center;
+  min-block-size: 64px;
+  padding-inline: var(--space-xl);
+  
+  /* Typography */
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: var(--ls-subtle);
+  color: var(--text);
+  text-decoration: none;
+  
+  /* Interaction */
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  
+  /* Active indicator space */
+  position: relative;
+  border-left: 2px solid transparent;
+}
+
+.mnav__link:hover,
+.mnav__link:focus-visible {
+  color: var(--gold-strong);
+  background: var(--hover-surface);
+  border-left-color: var(--gold);
+}
+
+.mnav__link:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--gold-strong);
+}
+
+/* Active State */
+.mnav__link.is-active {
+  color: var(--gold-strong);
+  border-left-color: var(--gold-strong);
+  background: rgba(200, 169, 106, 0.04);
+}
+
+/* ================================================================
+   FOOTER CTA
+   ================================================================ */
+.mnav__footer {
+  padding: var(--space-lg) var(--space-xl) var(--space-xl);
+  border-top: 1px solid var(--line);
+}
+
+.mnav__cta {
+  display: block;
+  padding: var(--space-lg) var(--space-xl);
+  
+  /* Styling */
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-strong) 100%);
+  color: var(--bg);
+  border-radius: var(--radius-md);
+  
+  /* Typography */
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: var(--ls-subtle);
+  
+  /* Interaction */
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.mnav__cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mnav__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(200, 169, 106, 0.3);
+}
+
+.mnav__cta:focus-visible {
+  outline: 2px solid var(--bg);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+   RESPONSIVE BEHAVIOR
+   ================================================================ */
+
+/* Hide mobile toggle on desktop */
+@media (min-width: 1025px) {
+  .mnav__toggle {
+    display: none !important;
+  }
+  
+  .mnav__panel {
+    display: none !important;
+  }
+}
+
+/* Show mobile toggle on tablets and mobile */
+@media (max-width: 1024px) {
+  .mnav__toggle {
+    display: flex;
+  }
+  
+  /* Hide original mobile menu if it exists */
+  .mobile-menu-btn,
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Optimize for smaller screens */
+@media (max-width: 480px) {
+  .mnav__sheet {
+    inset-inline: var(--space-md);
+    inset-block: var(--space-lg);
+  }
+  
+  .mnav__header {
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+  }
+  
+  .mnav__link {
+    min-block-size: 56px;
+    padding-inline: var(--space-lg);
+    font-size: 18px;
+  }
+  
+  .mnav__footer {
+    padding: var(--space-md) var(--space-lg) var(--space-lg);
+  }
+}
+
+/* ================================================================
+   REDUCED MOTION SUPPORT
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .mnav__toggle,
+  .mnav__icon,
+  .mnav__icon::before,
+  .mnav__icon::after,
+  .mnav__backdrop,
+  .mnav__sheet,
+  .mnav__link,
+  .mnav__cta {
+    transition: none !important;
+  }
+  
+  .mnav__sheet {
+    transform: none !important;
+  }
+}

@@ -243,14 +243,7 @@
     margin-bottom: 2rem;
 }
 
-/* Footer */
-.footer {
-    padding: 2rem 0;
-    text-align: center;
-    color: #6b7280;
-    font-size: 0.9rem;
-    background-color: #111215;
-}
+/* Old footer styles removed to avoid conflict with lx-footer */
 
 .load-more-btn {
     background: transparent;
@@ -524,60 +517,7 @@
     }
 }
 
-/* Footer */
-.footer-section {
-    background: #111827;
-    padding: 3rem 0 2rem;
-    border-top: 1px solid #374151;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.footer-info h3 {
-    color: #c9c9c9;
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.footer-info p {
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
-.footer-links {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.footer-links a {
-    color: #9ca3af;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: #c9c9c9;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid #374151;
-}
-
-.footer-bottom p {
-    color: #6b7280;
-    font-size: 0.875rem;
-}
+/* Old footer styles removed to avoid conflict with lx-footer from luxury.css */
 
 /* Animations */
 @keyframes fadeInUp {
