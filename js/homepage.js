@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCarousel();
     initializeEventBanner();
     initializeScrollAnimations();
+    initializeContactForm();
 });
 
 // Hero Animation Functions
@@ -258,11 +259,74 @@ document.addEventListener('visibilitychange', function() {
     }
 });
 
+// Contact Form Functionality
+function initializeContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', handleContactFormSubmit);
+}
+
+function handleContactFormSubmit(e) {
+    const form = e.target;
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    // Show loading state
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+    submitBtn.disabled = true;
+    
+    // Form will submit normally to Web3Forms
+    // Web3Forms will handle the redirect to thank-you.html
+}
+
+function showNotification(message, type = 'success') {
+    // Remove any existing notifications
+    const existingNotification = document.querySelector('.contact-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `contact-notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${type === 'success' ? '✓' : '⚠'}</span>
+            <span class="notification-message">${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Show with animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, 5000);
+}
+
 // Export functions for global access
 window.homepageUtils = {
     nextSlide,
     prevSlide,
     currentSlide,
     handleProjectClick,
-    cleanupHomepage
+    cleanupHomepage,
+    showNotification
 };

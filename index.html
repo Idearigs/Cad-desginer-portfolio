@@ -311,18 +311,18 @@
             </header>
             
             <!-- Event Banner - Shows when events exist -->
-            <div class="event-banner" data-reveal style="display: none;">
-                <div class="event-content">
-                    <div class="event-date">
-                        <span class="month">DEC</span>
-                        <span class="day">15</span>
+            <div id="eventBanner" class="event-banner" data-reveal style="display: none;">
+                <div class="event-banner-image">
+                    <img id="eventBannerImg" src="" alt="Event Banner" />
+                    <div class="event-banner-overlay">
+                        <div class="event-banner-info">
+                            <div class="event-date">
+                                <span class="month" id="eventMonth">DEC</span>
+                                <span class="day" id="eventDay">15</span>
+                            </div>
+                            <h3 class="event-title" id="eventTitle">Exclusive Trunk Show</h3>
+                        </div>
                     </div>
-                    <div class="event-details">
-                        <h3 class="event-title">Exclusive Trunk Show</h3>
-                        <p class="event-location">Colombo Design Gallery</p>
-                        <p class="event-description">Preview our latest collection featuring contemporary Sri Lankan-inspired designs.</p>
-                    </div>
-                    <a href="#" class="event-cta">Reserve Your Spot</a>
                 </div>
             </div>
             
@@ -361,7 +361,13 @@
                     </div>
                 </div>
                 
-                <form class="contact-form" data-reveal>
+                <form class="contact-form" data-reveal id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                    <!-- Web3Forms Configuration -->
+                    <input type="hidden" name="access_key" value="00347efe-dcb2-4067-88c0-d881173ea390">
+                    <input type="hidden" name="subject" value="New Commission Inquiry from Digital CAD Atelier">
+                    <input type="hidden" name="from_name" value="Digital CAD Atelier Contact Form">
+                    <input type="hidden" name="redirect" value="thank-you.html">
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Full Name</label>
@@ -374,7 +380,7 @@
                     </div>
                     <div class="form-group">
                         <label for="project-type">Project Type</label>
-                        <select id="project-type" name="project-type" required>
+                        <select id="project-type" name="project_type" required>
                             <option value="">Select a service</option>
                             <option value="engagement-ring">Engagement Ring</option>
                             <option value="wedding-bands">Wedding Bands</option>
@@ -385,9 +391,12 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Tell me about your vision</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Describe your dream piece, inspiration, budget range, and timeline..."></textarea>
+                        <textarea id="message" name="message" rows="5" placeholder="Describe your dream piece, inspiration, budget range, and timeline..." required></textarea>
                     </div>
-                    <button type="submit" class="btn-primary">Send Message</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading" style="display: none;">Sending...</span>
+                    </button>
                 </form>
             </div>
         </div>

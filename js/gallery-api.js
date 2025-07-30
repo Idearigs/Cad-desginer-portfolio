@@ -79,7 +79,15 @@ class GalleryAPI {
             galleryItem.dataset.category = item.category || 'uncategorized';
             galleryItem.onclick = () => window.galleryUtils.openModal(galleryItem);
             
-            const imageUrl = item.image_url || 'images/placeholder.svg';
+            // Fix image path for gallery images stored in uploads/gallery/
+            let imageUrl = item.image_url || 'images/placeholder.svg';
+            if (item.url && !item.url.startsWith('http')) {
+                // If using the url field from database, it should already have uploads/gallery/ prefix
+                imageUrl = item.url.startsWith('/') ? item.url.substring(1) : item.url;
+            } else if (item.image && !item.image.startsWith('http')) {
+                // If using image field, add uploads/gallery/ prefix
+                imageUrl = `uploads/gallery/${item.image}`;
+            }
             const title = item.title || 'Untitled';
             const description = item.description || '';
             const category = item.category ? item.category.charAt(0).toUpperCase() + item.category.slice(1) : 'Uncategorized';

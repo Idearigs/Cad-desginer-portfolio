@@ -516,7 +516,7 @@ class AdminDashboard {
             // Fix image path by checking if it's a full URL or just a filename
             let imagePath = article.image || article.image_url || 'images/placeholder.svg';
             if (imagePath && !imagePath.startsWith('http') && !imagePath.startsWith('/')) {
-                imagePath = 'uploads/' + imagePath; // Add uploads directory prefix if it's just a filename
+                imagePath = 'uploads/articles/' + imagePath; // Add uploads/articles directory prefix if it's just a filename
             }
             
             // Format date in a cleaner way
@@ -703,7 +703,7 @@ class AdminDashboard {
             // Fix image path by checking if it's a full URL or just a filename
             let imagePath = event.image || event.image_url || 'images/placeholder.svg';
             if (imagePath && !imagePath.startsWith('http') && !imagePath.startsWith('/')) {
-                imagePath = 'uploads/' + imagePath; // Add uploads directory prefix if it's just a filename
+                imagePath = 'uploads/events/' + imagePath; // Add uploads/events directory prefix if it's just a filename
             }
             
             // Format date in a cleaner way

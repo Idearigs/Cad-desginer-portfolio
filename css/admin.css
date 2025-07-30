@@ -632,13 +632,18 @@
     border-color: rgba(239, 68, 68, 0.3);
 }
 
-.events-grid {
-    grid-template-columns: 1fr;
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    justify-content: flex-start;
 }
 
-.gallery-grid, .events-grid {
+.events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     margin: 1.5rem 0;
     justify-content: flex-start;
@@ -1124,7 +1129,7 @@
     }
     
     .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
     
     .section-header {

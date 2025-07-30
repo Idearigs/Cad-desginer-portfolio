@@ -99,8 +99,8 @@ class NewsPage {
             if (article.image_url) {
                 imageSrc = this.getImageUrl(article.image_url);
             } else if (article.image) {
-                // Images are stored directly in the uploads directory, not in uploads/articles
-                imageSrc = `uploads/${article.image}`;
+                // Images are stored in uploads/articles directory
+                imageSrc = `uploads/articles/${article.image}`;
                 console.log('Using article.image path:', imageSrc);
             } else {
                 imageSrc = 'images/placeholder.svg';

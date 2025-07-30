@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function handleNavScroll() {
     const navigation = document.getElementById('navigation');
+    if (!navigation) return; // Exit early if navigation element doesn't exist
+    
     const scrollY = window.scrollY;
     
     if (scrollY > 50 && !isScrolled) {

@@ -5,7 +5,8 @@
 class EventsHandler {
     constructor() {
         this.apiUrl = 'api/events/index.php';
-        this.eventBannerContainer = document.querySelector('.event-banner');
+        this.eventBannerContainer = document.getElementById('eventBanner');
+        this.noEventsContainer = document.querySelector('.no-events');
         this.events = [];
         this.currentIndex = 0;
         this.autoRotateInterval = null;
@@ -61,39 +62,81 @@ class EventsHandler {
         }
 
         if (this.events.length === 0) {
-            this.renderFallbackEvent();
+            this.renderNoEvents();
             return;
         }
 
-        // Clear existing content
-        this.eventBannerContainer.innerHTML = '';
-
-        // Create event slides
-        this.events.forEach((event, index) => {
-            const imageUrl = event.image_url || (event.image ? `uploads/${event.image}` : 'images/placeholder.svg');
-            const isActive = index === 0;
-            
-            const eventSlide = document.createElement('div');
-            eventSlide.className = `event-image ${isActive ? 'active' : ''}`;
-            eventSlide.dataset.index = index;
-            
-            eventSlide.innerHTML = `
-                <img src="${imageUrl}" alt="${this.escapeHtml(event.title)}" 
-                     onerror="this.onerror=null; this.src='images/placeholder.svg'; this.style.objectFit='contain';">
-                <div class="event-details">
-                    <h3>${this.escapeHtml(event.title)}</h3>
-                    ${event.date ? `<p class="event-date">${this.formatDate(event.date)}</p>` : ''}
-                    ${event.location ? `<p class="event-location">${this.escapeHtml(event.location)}</p>` : ''}
-                </div>
-            `;
-            
-            this.eventBannerContainer.appendChild(eventSlide);
-        });
-
-        // Add navigation controls if there are multiple events
-        if (this.events.length > 1) {
-            this.addNavigationControls();
+        // Show event banner and hide no events state
+        this.eventBannerContainer.style.display = 'block';
+        if (this.noEventsContainer) {
+            this.noEventsContainer.style.display = 'none';
         }
+
+        // Display the first (latest) event
+        this.displayEvent(0);
+
+        // Setup auto-rotation if there are multiple events
+        if (this.events.length > 1) {
+            this.setupAutoRotate();
+        }
+    }
+
+    /**
+     * Display a specific event in the banner
+     */
+    displayEvent(index) {
+        if (index < 0 || index >= this.events.length) return;
+        
+        const event = this.events[index];
+        this.currentIndex = index;
+
+        // Get elements
+        const eventBannerImg = document.getElementById('eventBannerImg');
+        const eventMonth = document.getElementById('eventMonth');
+        const eventDay = document.getElementById('eventDay');
+        const eventTitle = document.getElementById('eventTitle');
+
+        if (!eventBannerImg || !eventMonth || !eventDay || !eventTitle) {
+            console.error('Event banner elements not found');
+            return;
+        }
+
+        // Set image
+        let imageUrl = 'images/placeholder.svg';
+        if (event.image_url) {
+            imageUrl = event.image_url.startsWith('/') ? event.image_url.substring(1) : event.image_url;
+            console.log('Using image_url:', imageUrl);
+        } else if (event.image) {
+            imageUrl = `uploads/events/${event.image}`;
+            console.log('Using image field:', imageUrl);
+        }
+        
+        console.log('Final image URL for event banner:', imageUrl);
+
+        eventBannerImg.src = imageUrl;
+        eventBannerImg.alt = event.title || 'Event Banner';
+        eventBannerImg.onerror = function() {
+            this.src = 'images/placeholder.svg';
+        };
+
+        // Set date
+        if (event.date) {
+            const eventDate = new Date(event.date);
+            const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+                               'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            
+            eventMonth.textContent = monthNames[eventDate.getMonth()];
+            eventDay.textContent = eventDate.getDate();
+        }
+
+        // Set title
+        eventTitle.textContent = event.title || 'Event';
+
+        console.log('Event displayed:', {
+            title: event.title,
+            date: event.date,
+            image: imageUrl
+        });
     }
 
     /**
@@ -128,21 +171,18 @@ class EventsHandler {
      */
     goToEvent(index) {
         if (index < 0 || index >= this.events.length) return;
-        
-        // Update current index
-        this.currentIndex = index;
-        
-        // Update active classes on slides
-        const slides = this.eventBannerContainer.querySelectorAll('.event-image');
-        slides.forEach((slide, i) => {
-            if (i === index) {
-                slide.classList.add('active');
-            } else {
-                slide.classList.remove('active');
-            }
-        });
-        
-        // No indicators to update since they've been removed
+        this.displayEvent(index);
+    }
+
+    /**
+     * Render no events state
+     */
+    renderNoEvents() {
+        // Hide event banner and show no events state
+        this.eventBannerContainer.style.display = 'none';
+        if (this.noEventsContainer) {
+            this.noEventsContainer.style.display = 'block';
+        }
     }
 
     /**
@@ -166,23 +206,6 @@ class EventsHandler {
         }
     }
 
-    /**
-     * Render a fallback event if no events are available
-     */
-    renderFallbackEvent() {
-        if (!this.eventBannerContainer) return;
-        
-        this.eventBannerContainer.innerHTML = `
-            <div class="event-image active">
-                <img src="images/placeholder.svg" alt="No events available" 
-                     onerror="this.style.display='none';">
-                <div class="event-details">
-                    <h3>No Events Currently Scheduled</h3>
-                    <p>Check back soon for upcoming events</p>
-                </div>
-            </div>
-        `;
-    }
 
     /**
      * Format date for display

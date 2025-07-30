@@ -351,8 +351,8 @@ class NewsDetailsPage {
                 console.log('Image is full URL:', this.article.image);
                 return this.article.image;
             } else {
-                // Images are stored directly in the uploads directory, not in uploads/articles
-                const path = `uploads/${this.article.image}`;
+                // Images are stored in uploads/articles directory
+                const path = `uploads/articles/${this.article.image}`;
                 console.log('Constructed path for image:', path);
                 return path;
             }
