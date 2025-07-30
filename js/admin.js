@@ -473,7 +473,7 @@ class AdminDashboard {
                 formData.append('tags', JSON.stringify(tags));
             }
             
-            let url = '/jewellery-designer/cad-art/api/news/index.php';
+            let url = 'news/index.php';
             let method = 'POST';
             
             // If editing, add the article ID and action to the form data
@@ -578,9 +578,8 @@ class AdminDashboard {
     async deleteArticle(id) {
         if (confirm('Are you sure you want to delete this article?')) {
             try {
-                const response = await fetch(`/jewellery-designer/cad-art/api/news/index.php?id=${id}`, {
-                    method: 'DELETE',
-                    credentials: 'include'
+                const response = await this.apiRequest(`news/index.php?id=${id}`, {
+                    method: 'DELETE'
                 });
                 
                 if (!response.ok) {
@@ -751,9 +750,8 @@ class AdminDashboard {
     async deleteArticle(id) {
         if (confirm('Are you sure you want to delete this article?')) {
             try {
-                const response = await fetch(`/jewellery-designer/cad-art/api/news/index.php?id=${id}`, {
-                    method: 'DELETE',
-                    credentials: 'include'
+                const response = await this.apiRequest(`news/index.php?id=${id}`, {
+                    method: 'DELETE'
                 });
                 
                 if (!response.ok) {
@@ -789,7 +787,7 @@ class AdminDashboard {
 
     async editEvent(id) {
         try {
-            const response = await this.apiRequest(`/jewellery-designer/cad-art/api/events/index.php?id=${id}`, {
+            const response = await this.apiRequest(`events/index.php?id=${id}`, {
                 method: 'GET'
             });
             
@@ -812,7 +810,7 @@ class AdminDashboard {
     async deleteEvent(id) {
         if (confirm('Are you sure you want to delete this event banner?')) {
             try {
-                const response = await this.apiRequest(`/jewellery-designer/cad-art/api/events/index.php?id=${id}`, {
+                const response = await this.apiRequest(`events/index.php?id=${id}`, {
                     method: 'DELETE'
                 });
                 
@@ -971,7 +969,7 @@ class AdminDashboard {
                     singleFormData.append('image', file);
                     singleFormData.append('title', title);
                     
-                    const response = await this.apiRequest('/jewellery-designer/cad-art/api/gallery/index.php', {
+                    const response = await this.apiRequest('gallery/index.php', {
                         method: 'POST',
                         body: singleFormData
                     });
@@ -1066,7 +1064,7 @@ class AdminDashboard {
     async deleteGalleryImage(id) {
         if (confirm('Are you sure you want to delete this image?')) {
             try {
-                const response = await this.apiRequest(`/jewellery-designer/cad-art/api/gallery/index.php?id=${id}`, {
+                const response = await this.apiRequest(`gallery/index.php?id=${id}`, {
                     method: 'DELETE'
                 });
                 
@@ -1086,7 +1084,7 @@ class AdminDashboard {
 
     async editGalleryImage(id) {
         try {
-            const response = await this.apiRequest(`/jewellery-designer/cad-art/api/gallery/index.php?id=${id}`, {
+            const response = await this.apiRequest(`gallery/index.php?id=${id}`, {
                 method: 'GET'
             });
             

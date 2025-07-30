@@ -43,6 +43,12 @@
     padding-bottom: 6rem;
 }
 
+@media (max-width: 768px) {
+    .news-details-section {
+        padding-top:10px;
+    }
+}
+
 .news-details-container {
     max-width: 900px;
     margin: 0 auto;

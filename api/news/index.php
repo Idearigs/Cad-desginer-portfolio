@@ -1,29 +1,55 @@
 <?php
-// Disable direct error output to ensure proper JSON responses
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/../../php_errors.log');
-
 /**
- * News API
+ * Enhanced News API v1
  * 
- * Handles CRUD operations for news articles
+ * Handles CRUD operations for news articles with security, validation, and logging
  */
 
-// Include required files
-require_once '../../includes/config.php';
-require_once '../../includes/db.php';
+// Set JSON header immediately to prevent HTML output
+header('Content-Type: application/json');
 
+// Disable error output completely
+error_reporting(0);
+ini_set('display_errors', 0);
+
+// Include enhanced configuration - fallback to simple if issues
+try {
+    require_once '../../includes/config.php';
+    require_once '../../includes/db.php';
+} catch (Exception $e) {
+    require_once '../../includes/config_simple.php';
+    require_once '../../includes/db_simple.php';
+}
+
+// Start request timing for performance monitoring
+$startTime = microtime(true);
+
+// Log API access (if Logger is available)
+if (class_exists('Logger')) {
+    Logger::info("News API accessed", [
+        'method' => $_SERVER['REQUEST_METHOD'] ?? 'unknown',
+        'uri' => $_SERVER['REQUEST_URI'] ?? 'unknown',
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
+    ]);
+}
+
+// Apply rate limiting (if available)
+if (class_exists('RateLimiter')) {
+    RateLimiter::enforce();
+}
 
 // Get request method and article ID if provided
 $method = $_SERVER['REQUEST_METHOD'];
 $articleId = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
-// For GET requests, we'll allow public access
-// For other methods (POST, PUT, DELETE), we'll require authentication
+// For GET requests, we'll allow public access with caching
+// For other methods (POST, PUT, DELETE), we'll require authentication and CSRF protection
 if ($method !== 'GET') {
     requireAuth();
+    // CSRF protection only if available
+    if (class_exists('CSRFProtection')) {
+        CSRFProtection::autoProtect();
+    }
 }
 
 // Handle different HTTP methods
@@ -216,13 +242,13 @@ function getArticle($articleId) {
 }
 
 /**
- * Create a new article
+ * Create a new article with enhanced validation
  */
 function createArticle() {
-    global $pdo;
+    global $pdo, $startTime;
     
     try {
-        // Get POST data
+        // Get POST data with basic validation
         $title = $_POST['title'] ?? '';
         $author = $_POST['author'] ?? '';
         $publication = $_POST['publication'] ?? '';
@@ -230,21 +256,64 @@ function createArticle() {
         $content = $_POST['content'] ?? '';
         $tags = $_POST['tags'] ?? '';
         
-        // Validate required fields
+        // Basic validation
         if (empty($title) || empty($content)) {
             jsonResponse(null, 400, 'Title and content are required');
             return;
         }
         
+        // Use validator if available
+        if (class_exists('Validator')) {
+            $validator = Validator::validateArticle($_POST);
+            
+            if ($validator->fails()) {
+                if (class_exists('Logger')) {
+                    Logger::warning("Article validation failed", [
+                        'errors' => $validator->errors(),
+                        'data' => array_keys($_POST)
+                    ]);
+                }
+                jsonResponse(null, 400, $validator->firstError());
+                return;
+            }
+            
+            $data = $validator->validated();
+            $title = $data['title'];
+            $author = $data['author'] ?? '';
+            $publication = $data['publication'] ?? '';
+            $date = $data['date'] ?? date('Y-m-d');
+            $content = $data['content'];
+        }
+        
         // Handle file upload if present
         $imagePath = null;
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../../uploads/';
-            $fileName = time() . '_' . basename($_FILES['image']['name']);
-            $targetPath = $uploadDir . $fileName;
-            
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
-                $imagePath = $fileName;
+            try {
+                // Use enhanced file upload if available
+                if (function_exists('handleFileUpload')) {
+                    $imagePath = handleFileUpload($_FILES['image'], null, null, 'articles');
+                } else {
+                    // Basic file upload
+                    $uploadDir = '../../uploads/articles/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
+                    $fileName = time() . '_' . basename($_FILES['image']['name']);
+                    $targetPath = $uploadDir . $fileName;
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+                        $imagePath = 'articles/' . $fileName;
+                    }
+                }
+                
+                if (class_exists('Logger')) {
+                    Logger::info("Article image uploaded", ['path' => $imagePath]);
+                }
+            } catch (Exception $e) {
+                if (class_exists('Logger')) {
+                    Logger::error("Article image upload failed", ['error' => $e->getMessage()]);
+                }
+                jsonResponse(null, 400, "Image upload failed: " . $e->getMessage());
+                return;
             }
         }
         
@@ -428,4 +497,17 @@ function deleteArticle($articleId) {
         error_log("Database error: " . $e->getMessage());
         jsonResponse(null, 500, 'Database error occurred');
     }
+}
+
+// Log performance metrics (if available)
+if (class_exists('Logger')) {
+    $endTime = microtime(true);
+    $duration = round(($endTime - $startTime) * 1000, 2); // Convert to milliseconds
+
+    Logger::info("News API request completed", [
+        'duration_ms' => $duration,
+        'method' => $method,
+        'memory_peak' => memory_get_peak_usage(true),
+        'memory_current' => memory_get_usage(true)
+    ]);
 }
