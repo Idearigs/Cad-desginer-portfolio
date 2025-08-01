@@ -9,10 +9,24 @@ class AdminDashboardClean {
         this.galleryImages = [];
         
         // Use clean API URLs
-        this.apiBaseUrl = '/jewellery-designer/cad-art/api';
+        this.apiBaseUrl = this.getApiBaseUrl();
         console.log('Clean API Base URL:', this.apiBaseUrl);
         
         this.init();
+    }
+
+    // Helper function to determine API base URL based on environment
+    getApiBaseUrl() {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        
+        // Check if we're on localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return origin + '/jewellery-designer/cad-art/api';
+        }
+        
+        // Production environment - use relative path
+        return origin + '/api';
     }
 
     init() {

@@ -2,9 +2,25 @@
 
 class GalleryAPI {
     constructor() {
-        this.apiUrl = 'api/gallery/index.php';
+        this.apiUrl = this.getApiUrl();
         this.galleryItems = [];
         this.categories = [];
+    }
+
+    /**
+     * Get API URL based on environment
+     */
+    getApiUrl() {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        
+        // Check if we're on localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return origin + '/jewellery-designer/cad-art/api/gallery/index.php';
+        }
+        
+        // Production environment - use relative path
+        return origin + '/api/gallery/index.php';
     }
 
     // Fetch all gallery images from the API

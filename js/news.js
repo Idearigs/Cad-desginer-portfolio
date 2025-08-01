@@ -15,6 +15,22 @@ class NewsPage {
         }
     }
 
+    /**
+     * Get API URL based on environment
+     */
+    getApiUrl() {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        
+        // Check if we're on localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return origin + '/jewellery-designer/cad-art/api/news/index.php';
+        }
+        
+        // Production environment - use relative path
+        return origin + '/api/news/index.php';
+    }
+
     async loadArticles() {
         try {
             // Show loading indicator
@@ -24,7 +40,7 @@ class NewsPage {
             }
             
             // Fetch articles from the API
-            const apiUrl = 'api/news/index.php';
+            const apiUrl = this.getApiUrl();
             console.log('Fetching articles from:', apiUrl);
             
             const response = await fetch(apiUrl);

@@ -4,12 +4,28 @@
  */
 class EventsHandler {
     constructor() {
-        this.apiUrl = 'api/events/index.php';
+        this.apiUrl = this.getApiUrl();
         this.eventBannerContainer = document.getElementById('eventBanner');
         this.noEventsContainer = document.querySelector('.no-events');
         this.events = [];
         this.currentIndex = 0;
         this.autoRotateInterval = null;
+    }
+
+    /**
+     * Get API URL based on environment
+     */
+    getApiUrl() {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        
+        // Check if we're on localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return origin + '/jewellery-designer/cad-art/api/events/index.php';
+        }
+        
+        // Production environment - use relative path
+        return origin + '/api/events/index.php';
     }
 
     /**
@@ -68,8 +84,11 @@ class EventsHandler {
 
         // Show event banner and hide no events state
         this.eventBannerContainer.style.display = 'block';
+        console.log('Event banner container display set to block');
+        console.log('Event banner container visibility:', window.getComputedStyle(this.eventBannerContainer).display);
         if (this.noEventsContainer) {
             this.noEventsContainer.style.display = 'none';
+            console.log('No events container hidden');
         }
 
         // Display the first (latest) event
@@ -104,8 +123,9 @@ class EventsHandler {
         // Set image
         let imageUrl = 'images/placeholder.svg';
         if (event.image_url) {
-            imageUrl = event.image_url.startsWith('/') ? event.image_url.substring(1) : event.image_url;
-            console.log('Using image_url:', imageUrl);
+            // Remove leading path if it contains the project directory structure
+            imageUrl = event.image_url.replace(/^\/jewellery-designer\/cad-art\//, '');
+            console.log('Using image_url (cleaned):', imageUrl);
         } else if (event.image) {
             imageUrl = `uploads/events/${event.image}`;
             console.log('Using image field:', imageUrl);
@@ -116,7 +136,12 @@ class EventsHandler {
         eventBannerImg.src = imageUrl;
         eventBannerImg.alt = event.title || 'Event Banner';
         eventBannerImg.onerror = function() {
+            console.error('Failed to load event image:', imageUrl);
+            console.log('Falling back to placeholder');
             this.src = 'images/placeholder.svg';
+        };
+        eventBannerImg.onload = function() {
+            console.log('Event image loaded successfully:', imageUrl);
         };
 
         // Set date

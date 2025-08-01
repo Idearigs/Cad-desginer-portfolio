@@ -10,6 +10,22 @@ class NewsDetailsPage {
         this.init();
     }
 
+    /**
+     * Get API URL based on environment
+     */
+    getApiUrl() {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        
+        // Check if we're on localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return origin + '/jewellery-designer/cad-art/api/news/index.php';
+        }
+        
+        // Production environment - use relative path
+        return origin + '/api/news/index.php';
+    }
+
     init() {
         this.getArticleId();
         this.loadArticle();
@@ -75,7 +91,7 @@ class NewsDetailsPage {
             this.showLoading();
             
             // Fetch article from the API
-            const apiUrl = `api/news/index.php?id=${this.articleId}`;
+            const apiUrl = `${this.getApiUrl()}?id=${this.articleId}`;
             console.log('Fetching article from:', apiUrl);
             
             const response = await fetch(apiUrl);

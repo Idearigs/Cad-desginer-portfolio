@@ -26,9 +26,8 @@ class AdminDashboard {
             return origin + '/jewellery-designer/cad-art/api';
         }
         
-        // Production environment - based on the error message, we need to include the full path
-        // The error shows that the server is looking for /jewellery-designer/cad-art/api/
-        return origin + '/jewellery-designer/cad-art/api';
+        // Production environment - use relative path
+        return origin + '/api';
     }
 
     init() {
@@ -535,7 +534,7 @@ class AdminDashboard {
                     <div class="minimal-card-date">${articleDate}</div>
                     <h3 class="minimal-card-title">${article.title}</h3>
                     <p class="minimal-card-excerpt">${article.content ? article.content.substring(0, 80) + '...' : 'No content'}</p>
-                    <a href="/jewellery-designer/cad-art/news-details.html?id=${article.id}" class="minimal-card-link">Read More <i data-lucide="arrow-right"></i></a>
+                    <a href="news-details.html?id=${article.id}" class="minimal-card-link">Read More <i data-lucide="arrow-right"></i></a>
                 </div>
                 <div class="minimal-card-actions">
                     <button class="minimal-btn edit-btn" onclick="admin.editArticle(${article.id})" title="Edit Article">
@@ -840,7 +839,7 @@ class AdminDashboard {
             [eventIds[index], eventIds[index - 1]] = [eventIds[index - 1], eventIds[index]];
             
             // Send the new order to the API using our helper
-            const response = await this.apiRequest('/jewellery-designer/cad-art/api/events/index.php?action=reorder', {
+            const response = await this.apiRequest(`${this.getApiBaseUrl()}/events/index.php?action=reorder`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -873,7 +872,7 @@ class AdminDashboard {
             [eventIds[index], eventIds[index + 1]] = [eventIds[index + 1], eventIds[index]];
             
             // Send the new order to the API using our helper
-            const response = await this.apiRequest('/jewellery-designer/cad-art/api/events/index.php?action=reorder', {
+            const response = await this.apiRequest(`${this.getApiBaseUrl()}/events/index.php?action=reorder`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -948,7 +947,7 @@ class AdminDashboard {
                     console.log('Updating image with file:', files[0].name);
                 }
                 
-                const response = await this.apiRequest(`/jewellery-designer/cad-art/api/gallery/index.php?id=${imageId}&action=update`, {
+                const response = await this.apiRequest(`${this.getApiBaseUrl()}/gallery/index.php?id=${imageId}&action=update`, {
                     method: 'POST',
                     body: updateFormData
                 });

@@ -73,7 +73,7 @@ function getGalleryImagesClean($pdo) {
     // Format images with proper URLs
     foreach ($images as &$image) {
         if ($image['url']) {
-            $image['image_url'] = '/jewellery-designer/cad-art/' . $image['url'];
+            $image['image_url'] = (EnvLoader::isProduction() ? '' : '/jewellery-designer/cad-art') . '/' . $image['url'];
         }
     }
     
@@ -90,7 +90,7 @@ function getGalleryImageClean($pdo, $id) {
     }
     
     if ($image['url']) {
-        $image['image_url'] = '/jewellery-designer/cad-art/' . $image['url'];
+        $image['image_url'] = (EnvLoader::isProduction() ? '' : '/jewellery-designer/cad-art') . '/' . $image['url'];
     }
     
     jsonResponseClean($image, 200, 'Image retrieved');
