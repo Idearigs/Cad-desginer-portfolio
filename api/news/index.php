@@ -24,7 +24,7 @@ require_once '../config_clean.php';
 
 try {
     // Database connection
-    $pdo = new PDO("mysql:host=localhost;dbname=digital_cad_atelier;charset=utf8mb4", "root", "", [
+    $pdo = new PDO("mysql:host=server119.web-hosting.com;dbname=chamodio_caddb;charset=utf8mb4", "chamodio_root", "#Chamalcaddb#2025", [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     ]);

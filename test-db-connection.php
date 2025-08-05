@@ -36,28 +36,28 @@ $results['environment'] = [
 
 // Test 3: Database connection attempts with different configurations
 $dbConfigs = [
-    // Config 1: Same as login.php (local dev)
+    // Config 1: Production hosting credentials
+    [
+        'name' => 'Production Hosting Config',
+        'host' => 'server119.web-hosting.com',
+        'dbname' => 'chamodio_caddb',
+        'username' => 'chamodio_root',
+        'password' => '#Chamalcaddb#2025'
+    ],
+    // Config 2: IP address connection
+    [
+        'name' => 'Production IP Config',
+        'host' => '198.54.116.108',
+        'dbname' => 'chamodio_caddb',
+        'username' => 'chamodio_root',
+        'password' => '#Chamalcaddb#2025'
+    ],
+    // Config 3: Local dev (fallback)
     [
         'name' => 'Local Development Config',
         'host' => 'localhost',
         'dbname' => 'digital_cad_atelier',
         'username' => 'root',
-        'password' => ''
-    ],
-    // Config 2: Common cPanel hosting
-    [
-        'name' => 'cPanel Hosting Config',
-        'host' => 'localhost',
-        'dbname' => 'chamaljayaratnadesign_digital_cad_atelier',
-        'username' => 'chamaljayaratnadesign_admin',
-        'password' => '' // Would need actual password
-    ],
-    // Config 3: Alternative cPanel format
-    [
-        'name' => 'Alternative cPanel Config',
-        'host' => 'localhost',
-        'dbname' => 'chamal_digital_cad_atelier',
-        'username' => 'chamal_admin',
         'password' => ''
     ]
 ];

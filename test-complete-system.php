@@ -59,9 +59,9 @@ header('Content-Type: text/html; charset=utf-8');
                 <h2>🗄️ Database Connection</h2>
                 <?php
                 $dbConfigs = [
-                    ['name' => 'Local Dev', 'host' => 'localhost', 'db' => 'digital_cad_atelier', 'user' => 'root', 'pass' => ''],
-                    ['name' => 'cPanel Format 1', 'host' => 'localhost', 'db' => 'chamaljayaratnadesign_digital_cad_atelier', 'user' => 'chamaljayaratnadesign_admin', 'pass' => ''],
-                    ['name' => 'cPanel Format 2', 'host' => 'localhost', 'db' => 'chamal_digital_cad_atelier', 'user' => 'chamal_admin', 'pass' => '']
+                    ['name' => 'Production Hosting', 'host' => 'server119.web-hosting.com', 'db' => 'chamodio_caddb', 'user' => 'chamodio_root', 'pass' => '#Chamalcaddb#2025'],
+                    ['name' => 'Production IP', 'host' => '198.54.116.108', 'db' => 'chamodio_caddb', 'user' => 'chamodio_root', 'pass' => '#Chamalcaddb#2025'],
+                    ['name' => 'Local Dev Fallback', 'host' => 'localhost', 'db' => 'digital_cad_atelier', 'user' => 'root', 'pass' => '']
                 ];
 
                 $connected = false;
