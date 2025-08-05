@@ -29,16 +29,8 @@ try {
         exit;
     }
 
-    // Load environment configuration
-    require_once __DIR__ . '/../../includes/env.php';
-    
-    // Database connection using environment variables
-    $db_host = EnvLoader::get('DB_HOST', 'localhost');
-    $db_name = EnvLoader::get('DB_NAME', 'digital_cad_atelier');
-    $db_user = EnvLoader::get('DB_USER', 'root');
-    $db_pass = EnvLoader::get('DB_PASS', '');
-
-    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass, [
+    // Direct database connection for hosting environment
+    $pdo = new PDO("mysql:host=server119.web-hosting.com;dbname=chamodio_caddb;charset=utf8mb4", "chamodio_root", "#Chamalcaddb#2025", [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_TIMEOUT => 30
