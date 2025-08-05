@@ -5,9 +5,18 @@
  * Provides system health and status information
  */
 
-// Include enhanced configuration
-require_once '../../includes/config.php';
-require_once '../../includes/db.php';
+// Set headers first
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET');
+
+// Try to include enhanced configuration, but handle errors gracefully
+try {
+    require_once '../../includes/env.php';
+    $useEnhancedConfig = true;
+} catch (Exception $e) {
+    $useEnhancedConfig = false;
+}
 
 // Start request timing
 $startTime = microtime(true);
@@ -15,18 +24,16 @@ $startTime = microtime(true);
 // Only allow GET requests
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
-    jsonResponse(null, 405, 'Method Not Allowed');
+    echo json_encode(['status' => 'error', 'message' => 'Method Not Allowed']);
+    exit;
 }
-
-// Apply basic rate limiting (more lenient for health checks)
-RateLimiter::enforce(null, 1000, 3600); // 1000 requests per hour
 
 try {
     $healthStatus = [
         'status' => 'healthy',
         'timestamp' => date('c'),
-        'version' => API_VERSION,
-        'environment' => EnvLoader::get('APP_ENV', 'unknown'),
+        'version' => '1.0',
+        'environment' => $useEnhancedConfig ? EnvLoader::get('APP_ENV', 'production') : 'production',
         'checks' => []
     ];
 
@@ -34,16 +41,21 @@ try {
 
     // Database connectivity check
     try {
-        $stmt = $pdo->query('SELECT 1');
-        $healthStatus['checks']['database'] = [
-            'status' => 'healthy',
-            'response_time_ms' => 0 // Will be calculated
-        ];
+        $pdo = new PDO("mysql:host=server119.web-hosting.com;dbname=chamodio_caddb;charset=utf8mb4", "chamodio_root", "#Chamalcaddb#2025", [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_TIMEOUT => 5
+        ]);
         
         $dbStartTime = microtime(true);
+        $stmt = $pdo->query('SELECT 1');
         $stmt->fetch();
         $dbEndTime = microtime(true);
-        $healthStatus['checks']['database']['response_time_ms'] = round(($dbEndTime - $dbStartTime) * 1000, 2);
+        
+        $healthStatus['checks']['database'] = [
+            'status' => 'healthy',
+            'response_time_ms' => round(($dbEndTime - $dbStartTime) * 1000, 2)
+        ];
         
     } catch (Exception $e) {
         $healthStatus['checks']['database'] = [
@@ -51,13 +63,12 @@ try {
             'error' => 'Database connection failed'
         ];
         $allHealthy = false;
-        Logger::error("Health check: Database connection failed", ['error' => $e->getMessage()]);
     }
 
     // File system checks
     try {
         $requiredDirs = [
-            'uploads' => UPLOAD_DIR,
+            'uploads' => __DIR__ . '/../../uploads',
             'logs' => __DIR__ . '/../../logs',
             'storage' => __DIR__ . '/../../storage'
         ];
@@ -85,7 +96,6 @@ try {
             'error' => 'Filesystem check failed'
         ];
         $allHealthy = false;
-        Logger::error("Health check: Filesystem check failed", ['error' => $e->getMessage()]);
     }
 
     // PHP configuration checks
@@ -119,8 +129,9 @@ try {
 
     // Disk space check for upload directory
     try {
-        $uploadDirSpace = disk_free_space(UPLOAD_DIR);
-        $uploadDirTotal = disk_total_space(UPLOAD_DIR);
+        $uploadDir = __DIR__ . '/../../uploads';
+        $uploadDirSpace = disk_free_space($uploadDir);
+        $uploadDirTotal = disk_total_space($uploadDir);
         $uploadDirUsed = $uploadDirTotal - $uploadDirSpace;
         $uploadDirUsedPercent = ($uploadDirUsed / $uploadDirTotal) * 100;
 
@@ -129,7 +140,7 @@ try {
             'free_bytes' => $uploadDirSpace,
             'free_mb' => round($uploadDirSpace / 1024 / 1024, 2),
             'used_percent' => round($uploadDirUsedPercent, 2),
-            'path' => UPLOAD_DIR
+            'path' => $uploadDir
         ];
 
         if ($uploadDirUsedPercent >= 90) {
@@ -168,13 +179,6 @@ try {
     $endTime = microtime(true);
     $healthStatus['response_time_ms'] = round(($endTime - $startTime) * 1000, 2);
 
-    // Log health check
-    Logger::info("Health check performed", [
-        'status' => $healthStatus['status'],
-        'response_time_ms' => $healthStatus['response_time_ms'],
-        'checks_count' => count($healthStatus['checks'])
-    ]);
-
     // Return appropriate HTTP status code
     $httpStatus = $allHealthy ? 200 : 503;
     
@@ -182,16 +186,24 @@ try {
     header('Cache-Control: no-cache, must-revalidate');
     header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() - 3600));
     
-    jsonResponse($healthStatus, $httpStatus, $allHealthy ? 'System is healthy' : 'System has issues');
+    http_response_code($httpStatus);
+    echo json_encode([
+        'status' => $allHealthy ? 'success' : 'error',
+        'message' => $allHealthy ? 'System is healthy' : 'System has issues',
+        'data' => $healthStatus
+    ]);
 
 } catch (Exception $e) {
-    Logger::error("Health check failed", ['error' => $e->getMessage()]);
-    
-    jsonResponse([
+    http_response_code(500);
+    echo json_encode([
         'status' => 'error',
-        'timestamp' => date('c'),
-        'error' => 'Health check failed'
-    ], 500, 'Health check failed');
+        'message' => 'Health check failed',
+        'data' => [
+            'status' => 'error',
+            'timestamp' => date('c'),
+            'error' => 'Health check failed'
+        ]
+    ]);
 }
 
 /**

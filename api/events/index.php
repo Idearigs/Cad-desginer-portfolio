@@ -73,7 +73,7 @@ function getEventsClean($pdo) {
     // Format events with proper image URLs
     foreach ($events as &$event) {
         if ($event['image']) {
-            $event['image_url'] = (EnvLoader::isProduction() ? '' : '/jewellery-designer/cad-art') . '/uploads/events/' . $event['image'];
+            $event['image_url'] = '/uploads/events/' . $event['image'];
         }
     }
     
@@ -90,7 +90,7 @@ function getEventClean($pdo, $id) {
     }
     
     if ($event['image']) {
-        $event['image_url'] = (EnvLoader::isProduction() ? '' : '/jewellery-designer/cad-art') . '/uploads/events/' . $event['image'];
+        $event['image_url'] = '/uploads/events/' . $event['image'];
     }
     
     jsonResponseClean($event, 200, 'Event retrieved');
