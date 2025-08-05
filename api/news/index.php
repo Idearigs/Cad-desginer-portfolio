@@ -23,10 +23,12 @@ ob_clean();
 require_once '../config_clean.php';
 
 try {
-    // Database connection
+    // Database connection with optimized timeout
     $pdo = new PDO("mysql:host=server119.web-hosting.com;dbname=chamodio_caddb;charset=utf8mb4", "chamodio_root", "#Chamalcaddb#2025", [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_TIMEOUT => 10,
+        PDO::ATTR_PERSISTENT => false
     ]);
 
     $method = $_SERVER['REQUEST_METHOD'];
@@ -69,6 +71,14 @@ try {
 function getArticlesClean($pdo) {
     $stmt = $pdo->query("SELECT * FROM articles ORDER BY date DESC");
     $articles = $stmt->fetchAll();
+    
+    // Add proper image URLs
+    foreach ($articles as &$article) {
+        if ($article['image']) {
+            $article['image_url'] = '/uploads/articles/' . $article['image'];
+        }
+    }
+    
     jsonResponseClean($articles, 200, 'Articles retrieved');
 }
 
@@ -79,6 +89,11 @@ function getArticleClean($pdo, $id) {
     
     if (!$article) {
         jsonResponseClean(null, 404, 'Article not found');
+    }
+    
+    // Add proper image URL
+    if ($article['image']) {
+        $article['image_url'] = '/uploads/articles/' . $article['image'];
     }
     
     jsonResponseClean($article, 200, 'Article retrieved');
@@ -95,24 +110,37 @@ function createArticleClean($pdo) {
         jsonResponseClean(null, 400, 'Title and content required');
     }
 
-    // Handle image upload
+    // Handle image upload with early validation
     $imagePath = null;
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Quick file size check
+        if ($_FILES['image']['size'] > 5242880) { // 5MB limit
+            jsonResponseClean(null, 400, 'File too large (max 5MB)');
+        }
+        
         $uploadDir = '../../uploads/articles/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
+        
         $fileName = time() . '_' . basename($_FILES['image']['name']);
         $targetPath = $uploadDir . $fileName;
+        
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
             $imagePath = $fileName;
+        } else {
+            jsonResponseClean(null, 500, 'Failed to upload image');
         }
     }
 
     $stmt = $pdo->prepare("INSERT INTO articles (title, author, publication, date, content, image, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-    $stmt->execute([$title, $author, $publication, $date, $content, $imagePath]);
     
-    jsonResponseClean(['id' => $pdo->lastInsertId()], 201, 'Article created');
+    if ($stmt->execute([$title, $author, $publication, $date, $content, $imagePath])) {
+        $newId = $pdo->lastInsertId();
+        jsonResponseClean(['id' => $newId], 201, 'Article created');
+    } else {
+        jsonResponseClean(null, 500, 'Failed to create article');
+    }
 }
 
 function updateArticleClean($pdo, $id) {

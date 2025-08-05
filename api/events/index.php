@@ -23,10 +23,12 @@ ob_clean();
 require_once '../config_clean.php';
 
 try {
-    // Database connection
+    // Database connection with optimized timeout
     $pdo = new PDO("mysql:host=server119.web-hosting.com;dbname=chamodio_caddb;charset=utf8mb4", "chamodio_root", "#Chamalcaddb#2025", [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_TIMEOUT => 10,
+        PDO::ATTR_PERSISTENT => false
     ]);
 
     $method = $_SERVER['REQUEST_METHOD'];
@@ -73,7 +75,12 @@ function getEventsClean($pdo) {
     // Format events with proper image URLs
     foreach ($events as &$event) {
         if ($event['image']) {
-            $event['image_url'] = '/uploads/events/' . $event['image'];
+            // Check if image path already contains 'events/' to avoid duplication
+            if (strpos($event['image'], 'events/') === 0) {
+                $event['image_url'] = '/uploads/' . $event['image'];
+            } else {
+                $event['image_url'] = '/uploads/events/' . $event['image'];
+            }
         }
     }
     
@@ -90,7 +97,12 @@ function getEventClean($pdo, $id) {
     }
     
     if ($event['image']) {
-        $event['image_url'] = '/uploads/events/' . $event['image'];
+        // Check if image path already contains 'events/' to avoid duplication
+        if (strpos($event['image'], 'events/') === 0) {
+            $event['image_url'] = '/uploads/' . $event['image'];
+        } else {
+            $event['image_url'] = '/uploads/events/' . $event['image'];
+        }
     }
     
     jsonResponseClean($event, 200, 'Event retrieved');
@@ -107,24 +119,37 @@ function createEventClean($pdo) {
         jsonResponseClean(null, 400, 'Title is required');
     }
 
-    // Handle image upload
+    // Handle image upload with early validation
     $imagePath = null;
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Quick file size check
+        if ($_FILES['image']['size'] > 5242880) { // 5MB limit
+            jsonResponseClean(null, 400, 'File too large (max 5MB)');
+        }
+        
         $uploadDir = '../../uploads/events/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
+        
         $fileName = time() . '_' . basename($_FILES['image']['name']);
         $targetPath = $uploadDir . $fileName;
+        
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
             $imagePath = $fileName;
+        } else {
+            jsonResponseClean(null, 500, 'Failed to upload image');
         }
     }
 
     $stmt = $pdo->prepare("INSERT INTO events (title, date, time, location, description, image, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
-    $stmt->execute([$title, $date, $time, $location, $description, $imagePath]);
     
-    jsonResponseClean(['id' => $pdo->lastInsertId()], 201, 'Event created');
+    if ($stmt->execute([$title, $date, $time, $location, $description, $imagePath])) {
+        $newId = $pdo->lastInsertId();
+        jsonResponseClean(['id' => $newId], 201, 'Event created');
+    } else {
+        jsonResponseClean(null, 500, 'Failed to create event');
+    }
 }
 
 function updateEventClean($pdo, $id) {

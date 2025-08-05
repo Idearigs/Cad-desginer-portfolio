@@ -23,10 +23,12 @@ ob_clean();
 require_once '../config_clean.php';
 
 try {
-    // Database connection
+    // Database connection with optimized timeout
     $pdo = new PDO("mysql:host=server119.web-hosting.com;dbname=chamodio_caddb;charset=utf8mb4", "chamodio_root", "#Chamalcaddb#2025", [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_TIMEOUT => 10,
+        PDO::ATTR_PERSISTENT => false
     ]);
 
     $method = $_SERVER['REQUEST_METHOD'];
