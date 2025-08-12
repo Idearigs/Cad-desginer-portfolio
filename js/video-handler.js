@@ -1,111 +1,57 @@
 /**
- * Video Handler for Hero Section
- * Handles YouTube embed and fallbacks
+ * Professional Hero Video Handler
+ * Clean, simple, and reliable video background implementation
  */
 
-(function() {
-    'use strict';
-    
-    function initVideoHandler() {
-        const heroVideo = document.querySelector('.hero-video');
-        const video = heroVideo?.querySelector('.hero-background-video');
-        const fallback = heroVideo?.querySelector('.hero-video-fallback');
+class HeroVideoHandler {
+    constructor() {
+        this.video = null;
+        this.fallbackBg = null;
+        this.isVideoSupported = true;
+        this.retryCount = 0;
+        this.maxRetries = 2;
         
-        if (video) {
-            console.log('Hero background video initialized');
-            
-            video.addEventListener('loadeddata', function() {
-                console.log('Video loaded successfully');
-                if (fallback) fallback.style.display = 'none';
-            });
-            
-            video.addEventListener('error', function() {
-                console.warn('Video failed to load');
-                handleVideoError();
-            });
-            
-            video.addEventListener('canplaythrough', function() {
-                if (video.paused) {
-                    video.play().catch(function(error) {
-                        console.warn('Video autoplay failed:', error);
-                        // This is okay for background videos
-                    });
-                }
-            });
-            
-            // Try to load the video
-            setTimeout(function() {
-                if (video.readyState === 0) {
-                    console.warn('Video metadata not loaded, attempting manual load');
-                    video.load();
-                }
-            }, 2000);
-            
-        } else if (video) {
-            // Fallback to original video handling
-            video.addEventListener('error', function(e) {
-                console.warn('Video failed to load:', e);
-                handleVideoError();
-            });
-            
-            video.addEventListener('loadeddata', function() {
-                console.log('Video loaded successfully');
-                video.style.opacity = '1';
-            });
-            
-            video.addEventListener('canplaythrough', function() {
-                if (video.paused) {
-                    video.play().catch(function(error) {
-                        console.warn('Video autoplay failed:', error);
-                    });
-                }
-            });
-            
-            setTimeout(function() {
-                if (video.readyState === 0) {
-                    console.warn('Video metadata not loaded, attempting manual load');
-                    video.load();
-                }
-            }, 2000);
-        }
+        this.init();
     }
     
-    function handleVideoError() {
-        const heroVideo = document.querySelector('.hero-video');
+    init() {
+        // Get video elements
+        this.video = document.getElementById('heroVideo');
+        this.fallbackBg = document.querySelector('.hero-fallback-bg');
         
-        if (heroVideo) {
-            // Hide any video elements
-            const iframe = heroVideo.querySelector('iframe');
-            const video = heroVideo.querySelector('video');
-            
-            if (iframe) iframe.style.display = 'none';
-            if (video) video.style.display = 'none';
-            
-            // Create a fallback background
-            heroVideo.style.background = 'linear-gradient(135deg, #1a1b1d 0%, #15161a 100%)';
-            heroVideo.style.backgroundSize = 'cover';
-            
-            console.log('Video fallback applied');
+        console.log('Video element found:', !!this.video);
+        console.log('Fallback element found:', !!this.fallbackBg);
+        console.log('Video src:', this.video?.currentSrc || this.video?.src);
+        
+        if (!this.video) {
+            console.error('Hero video element not found!');
+            this.showFallback();
+            return;
         }
+        
+        console.log('Hero video handler initialized successfully');
+        this.setupVideo();
     }
     
-    // Helper function to check if video iframe is loaded
-    function isVideoLoaded(iframe) {
-        if (!iframe) return false;
+    setupVideo() {
+        // Ensure video properties are correct
+        this.video.muted = true;
+        this.video.playsInline = true;
+        this.video.loop = true;
+        this.video.autoplay = true;
+        this.video.controls = false;
+        this.video.disablePictureInPicture = true;
+        
+        // Set up event listeners
+        this.video.addEventListener('loadeddata', this.onVideoLoaded.bind(this));
+        this.video.addEventListener('canplaythrough', this.onVideoReady.bind(this));
+        this.video.addEventListener('error', this.onVideoError.bind(this));
+        this.video.addEventListener('stalled', this.onVideoStalled.bind(this));
+        
+        // Attempt to load and play
+        this.loadVideo();
+    }
+    
+    loadVideo() {
         try {
-            // Check if iframe has content and is not showing error
-            return iframe.offsetHeight > 0 && iframe.offsetWidth > 0 && 
-                   iframe.style.display !== 'none';
-        } catch (e) {
-            return false;
-        }
-    }
-    
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initVideoHandler);
-    } else {
-        initVideoHandler();
-    }
-    
-})();
+            console.log('Loading video...');\n            this.video.load();\n            \n            // Set timeout for loading\n            setTimeout(() => {\n                if (this.video.readyState < 2 && this.retryCount < this.maxRetries) {\n                    console.log('Video loading timeout, retrying...');\n                    this.retryCount++;\n                    this.loadVideo();\n                } else if (this.video.readyState < 2) {\n                    console.warn('Video failed to load after retries');\n                    this.showFallback();\n                }\n            }, 5000);\n            \n        } catch (error) {\n            console.error('Error loading video:', error);\n            this.showFallback();\n        }\n    }\n    \n    onVideoLoaded() {\n        console.log('Video data loaded successfully');\n        this.video.classList.add('loaded');\n        this.hideFallback();\n        this.playVideo();\n    }\n    \n    onVideoReady() {\n        console.log('Video ready to play');\n        this.playVideo();\n    }\n    \n    onVideoError(event) {\n        console.error('Video error:', event);\n        console.error('Video error details:', {\n            code: this.video.error?.code,\n            message: this.video.error?.message,\n            src: this.video.currentSrc\n        });\n        \n        if (this.retryCount < this.maxRetries) {\n            console.log('Retrying video load...');\n            this.retryCount++;\n            setTimeout(() => this.loadVideo(), 2000);\n        } else {\n            this.showFallback();\n        }\n    }\n    \n    onVideoStalled() {\n        console.warn('Video loading stalled');\n        if (this.retryCount < this.maxRetries) {\n            this.retryCount++;\n            setTimeout(() => this.loadVideo(), 3000);\n        }\n    }\n    \n    async playVideo() {\n        try {\n            await this.video.play();\n            console.log('Video playing successfully');\n        } catch (error) {\n            // Autoplay prevention is normal and expected\n            if (error.name === 'NotAllowedError') {\n                console.log('Autoplay prevented by browser - this is normal for background videos');\n                // Video will remain visible but paused, which is fine for background\n            } else {\n                console.warn('Video play failed:', error.message);\n            }\n        }\n    }\n    \n    showFallback() {\n        console.log('Showing video fallback background');\n        \n        if (this.video) {\n            this.video.style.opacity = '0';\n            this.video.style.display = 'none';\n        }\n        \n        if (this.fallbackBg) {\n            this.fallbackBg.style.opacity = '1';\n        }\n    }\n    \n    hideFallback() {\n        if (this.fallbackBg) {\n            this.fallbackBg.style.opacity = '0';\n        }\n    }\n}\n\n// Initialize when DOM is ready\nif (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', () => {\n        new HeroVideoHandler();\n    });\n} else {\n    new HeroVideoHandler();\n}

@@ -95,35 +95,34 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
-        <div class="hero-video">
-            <!-- Use direct video for all devices to avoid YouTube restrictions -->
+        <!-- Background Media -->
+        <div class="hero-background">
             <video 
-                class="hero-background-video"
+                id="heroVideo"
+                class="hero-video"
                 autoplay 
                 muted 
                 loop 
                 playsinline
-                preload="metadata"
-                title="Background Video">
+                preload="metadata">
                 <source src="images/video.mp4" type="video/mp4">
             </video>
-            
-            <!-- Fallback background -->
-            <div class="hero-video-fallback"></div>
+            <div class="hero-fallback-bg"></div>
         </div>
         
-        <div class="hero-overlay"></div>
-        
-        <div class="hero-content">
-            <div class="hero-text-animation">
-                <h1 id="heroTitle" class="hero-title">PRECISION</h1>
+        <!-- Content Overlay -->
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <div class="hero-text-animation">
+                    <h1 id="heroTitle" class="hero-title">PRECISION</h1>
+                </div>
             </div>
+            
+            <button class="scroll-indicator" onclick="scrollToSection('awards')">
+                <span>Discover</span>
+                <div class="scroll-line"></div>
+            </button>
         </div>
-
-        <button class="scroll-indicator" onclick="scrollToSection('awards')">
-            <span>Discover</span>
-            <div class="scroll-line"></div>
-        </button>
     </section>
 
     <!-- Awards Section -->

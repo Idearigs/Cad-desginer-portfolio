@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Path Test</title>
+</head>
+<body>
+    <h2>Testing Image Paths</h2>
+    
+    <div>
+        <h3>Original Path (should fail):</h3>
+        <img src="/uploads/events/1754983502_2017  JEWELLERY THIS USA - Copy.jpg" alt="Original path" style="max-width: 200px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <p style="display: none; color: red;">❌ Original path failed</p>
+    </div>
+    
+    <div>
+        <h3>Relative Path (should fail):</h3>
+        <img src="uploads/events/1754983502_2017  JEWELLERY THIS USA - Copy.jpg" alt="Relative path" style="max-width: 200px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <p style="display: none; color: red;">❌ Relative path failed</p>
+    </div>
+    
+    <div>
+        <h3>Awards Directory (should work):</h3>
+        <img src="images/awards/2017  JEWELLERY THIS USA - Copy.jpg" alt="Awards directory" style="max-width: 200px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" onload="this.nextElementSibling.style.display='block'; this.nextElementSibling.style.color='green'; this.nextElementSibling.innerHTML='✅ Awards path worked!';">
+        <p style="display: none; color: red;">❌ Awards path failed</p>
+    </div>
+    
+    <div>
+        <h3>Placeholder (should work):</h3>
+        <img src="images/placeholder.svg" alt="Placeholder" style="max-width: 200px;" onload="this.nextElementSibling.style.display='block'; this.nextElementSibling.style.color='green'; this.nextElementSibling.innerHTML='✅ Placeholder worked!';">
+        <p style="display: none;">Placeholder test</p>
+    </div>
+    
+    <script>
+        console.log('Testing image paths...');
+        
+        // Test if awards directory image exists
+        const testImg = new Image();
+        testImg.onload = function() {
+            console.log('✅ Awards directory image exists and loads');
+        };
+        testImg.onerror = function() {
+            console.log('❌ Awards directory image failed to load');
+        };
+        testImg.src = 'images/awards/2017  JEWELLERY THIS USA - Copy.jpg';
+    </script>
+</body>
+</html>

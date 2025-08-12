@@ -120,15 +120,32 @@ class EventsHandler {
             return;
         }
 
-        // Set image
+        // Set image with fallback logic
         let imageUrl = 'images/placeholder.svg';
+        
+        // Try different image path strategies
         if (event.image_url) {
-            // Remove leading path if it contains the project directory structure
+            // Clean up the image URL path
             imageUrl = event.image_url.replace(/^\/jewellery-designer\/cad-art\//, '');
             console.log('Using image_url (cleaned):', imageUrl);
         } else if (event.image) {
             imageUrl = `uploads/events/${event.image}`;
             console.log('Using image field:', imageUrl);
+        }
+        
+        // Fallback to awards directory if event image doesn't exist
+        if (!imageUrl.includes('placeholder')) {
+            console.log('Original image URL:', imageUrl);
+            
+            // Extract just the filename for potential fallback
+            const filename = imageUrl.split('/').pop();
+            console.log('Extracted filename:', filename);
+            
+            // If the filename contains award-related names, try awards directory
+            if (filename && (filename.includes('AWARD') || filename.includes('Award') || filename.includes('JEWELLERY'))) {
+                const fallbackUrl = `images/awards/${filename.replace(/^\d+_/, '')}`;
+                console.log('Attempting awards directory fallback:', fallbackUrl);
+            }
         }
         
         console.log('Final image URL for event banner:', imageUrl);
@@ -137,8 +154,28 @@ class EventsHandler {
         eventBannerImg.alt = event.title || 'Event Banner';
         eventBannerImg.onerror = function() {
             console.error('Failed to load event image:', imageUrl);
-            console.log('Falling back to placeholder');
-            this.src = 'images/placeholder.svg';
+            
+            // Try fallback to awards directory if filename suggests it's an award
+            const filename = imageUrl.split('/').pop();
+            if (filename && (filename.includes('AWARD') || filename.includes('Award') || filename.includes('JEWELLERY'))) {
+                const cleanFilename = filename.replace(/^\d+_/, '');
+                const fallbackUrl = `images/awards/${cleanFilename}`;
+                console.log('Trying awards directory fallback:', fallbackUrl);
+                
+                const fallbackImg = new Image();
+                fallbackImg.onload = function() {
+                    console.log('Awards fallback successful:', fallbackUrl);
+                    eventBannerImg.src = fallbackUrl;
+                };
+                fallbackImg.onerror = function() {
+                    console.log('Awards fallback failed, using placeholder');
+                    eventBannerImg.src = 'images/placeholder.svg';
+                };
+                fallbackImg.src = fallbackUrl;
+            } else {
+                console.log('Using placeholder image');
+                this.src = 'images/placeholder.svg';
+            }
         };
         eventBannerImg.onload = function() {
             console.log('Event image loaded successfully:', imageUrl);

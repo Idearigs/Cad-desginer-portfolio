@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Test</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-container {
+            margin: 20px 0;
+            border: 1px solid #333;
+            padding: 15px;
+        }
+        video {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success { background: #1a4a1a; color: #4ade80; }
+        .error { background: #4a1a1a; color: #f87171; }
+        .warning { background: #4a3a1a; color: #fbbf24; }
+        .info { background: #1a2a4a; color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <h1>Video Compatibility Test</h1>
+    
+    <div class="test-container">
+        <h3>Test 1: Direct Video Path</h3>
+        <video id="test1" controls muted>
+            <source src="images/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div id="status1" class="status info">Testing...</div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Test 2: Autoplay Video (Hero Style)</h3>
+        <video id="test2" autoplay muted loop playsinline controls="false">
+            <source src="images/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div id="status2" class="status info">Testing...</div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Test 3: Video Information</h3>
+        <div id="videoInfo" class="status info">Loading...</div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Test 4: Server Path Test</h3>
+        <div id="pathTest" class="status info">Testing paths...</div>
+    </div>
+
+    <script>
+        console.log('Video compatibility test starting...');
+        
+        // Test 1: Basic video with controls
+        const test1 = document.getElementById('test1');
+        const status1 = document.getElementById('status1');
+        
+        test1.addEventListener('loadeddata', function() {
+            status1.className = 'status success';
+            status1.textContent = '✅ Video loaded successfully with controls';
+        });
+        
+        test1.addEventListener('error', function(e) {
+            status1.className = 'status error';
+            status1.textContent = '❌ Video failed to load: ' + (test1.error ? test1.error.message : 'Unknown error');
+        });
+        
+        // Test 2: Autoplay video
+        const test2 = document.getElementById('test2');
+        const status2 = document.getElementById('status2');
+        
+        test2.addEventListener('loadeddata', function() {
+            status2.className = 'status success';
+            status2.textContent = '✅ Autoplay video loaded successfully';
+        });
+        
+        test2.addEventListener('play', function() {
+            status2.className = 'status success';
+            status2.textContent = '✅ Autoplay video is playing';
+        });
+        
+        test2.addEventListener('error', function(e) {
+            status2.className = 'status error';
+            status2.textContent = '❌ Autoplay video failed: ' + (test2.error ? test2.error.message : 'Unknown error');
+        });
+        
+        // Video info
+        const videoInfo = document.getElementById('videoInfo');
+        
+        setTimeout(function() {
+            const testVideo = document.createElement('video');
+            testVideo.src = 'images/video.mp4';
+            
+            testVideo.addEventListener('loadedmetadata', function() {
+                videoInfo.className = 'status success';
+                videoInfo.innerHTML = `
+                    ✅ Video File Information:<br>
+                    Duration: ${testVideo.duration.toFixed(2)} seconds<br>
+                    Dimensions: ${testVideo.videoWidth}x${testVideo.videoHeight}<br>
+                    Ready State: ${testVideo.readyState}<br>
+                    Current Time: ${testVideo.currentTime}
+                `;
+            });
+            
+            testVideo.addEventListener('error', function() {
+                videoInfo.className = 'status error';
+                videoInfo.textContent = '❌ Could not load video metadata';
+            });
+            
+            testVideo.load();
+        }, 1000);
+        
+        // Path tests
+        const pathTest = document.getElementById('pathTest');
+        
+        async function testPaths() {
+            const paths = [
+                'images/video.mp4',
+                './images/video.mp4',
+                '/images/video.mp4',
+                window.location.origin + '/images/video.mp4'
+            ];
+            
+            let results = [];
+            
+            for (let path of paths) {
+                try {
+                    const response = await fetch(path, { method: 'HEAD' });
+                    if (response.ok) {
+                        results.push(`✅ ${path} - Accessible`);
+                    } else {
+                        results.push(`❌ ${path} - Status ${response.status}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${path} - Error: ${error.message}`);
+                }
+            }
+            
+            pathTest.className = 'status info';
+            pathTest.innerHTML = 'Path Test Results:<br>' + results.join('<br>');
+        }
+        
+        testPaths();
+        
+        // Browser capabilities
+        setTimeout(function() {
+            console.log('Browser video capabilities:');
+            console.log('Can play MP4:', !!document.createElement('video').canPlayType('video/mp4'));
+            console.log('Autoplay policy:', navigator.getAutoplayPolicy ? navigator.getAutoplayPolicy('mediaelement') : 'Unknown');
+            console.log('User agent:', navigator.userAgent);
+            console.log('Location:', window.location.href);
+        }, 2000);
+    </script>
+</body>
+</html>
