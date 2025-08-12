@@ -96,20 +96,20 @@
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
         <div class="hero-video">
+            <!-- Use direct video for all devices to avoid YouTube restrictions -->
             <video 
+                class="hero-background-video"
                 autoplay 
                 muted 
                 loop 
                 playsinline
                 preload="metadata"
-                crossorigin="anonymous"
-                title="Background Video"
-                poster="images/placeholder.svg">
-                <source src="./images/video.mp4" type="video/mp4">
+                title="Background Video">
                 <source src="images/video.mp4" type="video/mp4">
-                <!-- Fallback for older browsers -->
-                <p>Your browser does not support the video tag. Please update your browser or <a href="images/video.mp4">download the video</a>.</p>
             </video>
+            
+            <!-- Fallback background -->
+            <div class="hero-video-fallback"></div>
         </div>
         
         <div class="hero-overlay"></div>
@@ -236,11 +236,15 @@
                 <span class="gold-line" aria-hidden="true"></span>
             </header>
             
-            <div class="lx-carousel">
-                <button class="lx-carousel__btn lx-carousel__btn--prev" aria-label="Previous items">‹</button>
-                <button class="lx-carousel__btn lx-carousel__btn--next" aria-label="Next items">›</button>
-                
-                <article class="lx-slide lx-card" data-reveal>
+            <div class="lx-carousel-container">
+                <button class="carousel-nav carousel-nav--prev" aria-label="Previous slide">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="lx-carousel">
+                    <div class="lx-carousel-track">
+                        <article class="lx-slide lx-card" data-reveal>
                     <figure class="lx-card__media">
                         <img src="images/124627451_10157718853085835_4693871903297397792_o.jpg" alt="Celestial necklace with sapphire centerpiece">
                         <span class="lx-card__shimmer" aria-hidden="true"></span>
@@ -249,7 +253,6 @@
                         <div class="lx-card__content">
                             <p class="lx-card__overline">NECKLACES</p>
                             <h3 class="lx-card__title">Celestial Arc</h3>
-                
                         </div>
                     </div>
                 </article>
@@ -263,7 +266,6 @@
                         <div class="lx-card__content">
                             <p class="lx-card__overline">BRACELETS</p>
                             <h3 class="lx-card__title">Heritage Link</h3>
-           
                         </div>
                     </div>
                 </article>
@@ -277,8 +279,6 @@
                         <div class="lx-card__content">
                             <p class="lx-card__overline">ENGAGEMENT</p>
                             <h3 class="lx-card__title">Lumina Solitaire</h3>
-                            
-                  
                         </div>
                     </div>
                 </article>
@@ -292,7 +292,6 @@
                         <div class="lx-card__content">
                             <p class="lx-card__overline">ACCESSORIES</p>
                             <h3 class="lx-card__title">Deco Cufflinks</h3>
-              
                         </div>
                     </div>
                 </article>
@@ -306,11 +305,16 @@
                         <div class="lx-card__content">
                             <p class="lx-card__overline">VINTAGE</p>
                             <h3 class="lx-card__title">Art Nouveau Brooch</h3>
-                            
-                     
                         </div>
                     </div>
-                </article>
+                        </article>
+                    </div>
+                </div>
+                <button class="carousel-nav carousel-nav--next" aria-label="Next slide">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -478,6 +482,7 @@
     <script src="js/contact-form.js" defer></script>
     <script src="js/hero-animation.js"></script>
     <script src="js/video-handler.js"></script>
+    <script src="js/carousel.js"></script>
     <script src="js/mobile-nav.js"></script>
     <script src="scripts/header.js"></script>
     <script src="scripts/reveal.js"></script>

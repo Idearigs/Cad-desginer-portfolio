@@ -338,24 +338,70 @@
 /* ================================================================
    MINIMALISTIC GLASS CAROUSEL
    ================================================================ */
-.lx-carousel {
+
+/* ================================================================
+   MANUAL CAROUSEL SYSTEM - 4 CARDS VIEW
+   ================================================================ */
+
+.lx-carousel-container {
   position: relative;
+  width: 100%;
+  padding: 2rem 0;
   display: flex;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 0 0 1rem 0;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
-.lx-carousel::-webkit-scrollbar {
-  display: none;
+@media (max-width: 768px) {
+  .lx-carousel-container {
+    gap: 0;
+    padding: 2rem 1rem;
+  }
+}
+
+.lx-carousel {
+  position: relative;
+  width: calc(4 * 320px + 3 * 2rem);
+  max-width: calc(100vw - 8rem);
+  overflow: hidden;
+  border-radius: 0.25rem;
+}
+
+@media (max-width: 1400px) {
+  .lx-carousel {
+    width: calc(3 * 320px + 2 * 2rem);
+  }
+}
+
+@media (max-width: 1100px) {
+  .lx-carousel {
+    width: calc(2 * 320px + 1 * 2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .lx-carousel {
+    width: calc(2 * 280px + 1 * 1.5rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .lx-carousel {
+    width: 280px;
+  }
+}
+
+.lx-carousel-track {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
 .lx-slide {
   flex: 0 0 280px;
-  scroll-snap-align: start;
+  transition: opacity 0.3s ease;
 }
 
 @media (min-width: 768px) {
@@ -364,44 +410,74 @@
   }
 }
 
-/* Glass carousel buttons */
-.lx-carousel__btn {
+/* Minimalist Navigation Arrows */
+.carousel-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 3;
-  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0;
 }
 
-.lx-carousel__btn:hover {
-  background: rgba(200, 169, 106, 0.2);
-  border-color: rgba(200, 169, 106, 0.4);
-  color: rgba(255, 255, 255, 1);
+.carousel-nav svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
 }
 
-.lx-carousel__btn--prev {
-  left: 1rem;
+.carousel-nav:hover {
+  color: rgba(200, 169, 106, 0.9);
+  transform: translateY(-50%) scale(1.2);
 }
 
-.lx-carousel__btn--next {
-  right: 1rem;
+.carousel-nav:hover svg {
+  stroke-width: 2;
+}
+
+.carousel-nav:disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.carousel-nav--prev {
+  left: -40px;
+}
+
+.carousel-nav--next {
+  right: -40px;
 }
 
 @media (max-width: 768px) {
-  .lx-carousel__btn {
-    display: none;
+  .carousel-nav {
+    width: 28px;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+  }
+  
+  .carousel-nav svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .carousel-nav--prev {
+    left: 8px;
+  }
+  
+  .carousel-nav--next {
+    right: 8px;
   }
 }
 
