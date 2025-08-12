@@ -35,9 +35,9 @@
                 cardsPerView = 1;
             } else if (viewportWidth <= 768) {
                 cardsPerView = 2;
-            } else if (viewportWidth <= 1100) {
+            } else if (viewportWidth <= 1099) {
                 cardsPerView = 2;
-            } else if (viewportWidth <= 1400) {
+            } else if (viewportWidth <= 1399) {
                 cardsPerView = 3;
             } else {
                 cardsPerView = 4;
