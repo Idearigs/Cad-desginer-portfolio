@@ -1851,42 +1851,97 @@
 /* Awards Section */
 .awards-section {
     background: var(--bg-soft);
-    padding: 4rem 0;
+    padding: 6rem 0;
     text-align: center;
+    overflow: hidden;
+    position: relative;
 }
 
 .awards-showcase {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 3rem;
-    max-width: 1000px;
-    margin: 2rem auto 0;
-    padding: 0 2rem;
+    width: fit-content;
+    animation: scrollAwards 90s linear infinite;
+    padding: 2rem 0;
+}
+
+@keyframes scrollAwards {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .award-badge {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
     opacity: 0.9;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+    filter: grayscale(10%) brightness(0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: scale(1);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
 }
 
 .award-badge:hover {
     opacity: 1;
-    transform: scale(1.1);
+    transform: scale(1.15);
+    filter: grayscale(0%) brightness(1.05);
+    box-shadow: 0 12px 35px rgba(200, 169, 106, 0.4);
+    z-index: 10;
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 768px) {
     .award-badge {
-        width: 120px;
-        height: 120px;
+        width: 160px;
+        height: 160px;
+        padding: 10px;
     }
     
     .awards-showcase {
         gap: 4rem;
+    }
+    
+    .awards-section {
+        padding: 7rem 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .award-badge {
+        width: 180px;
+        height: 180px;
+        padding: 12px;
+    }
+    
+    .awards-showcase {
+        gap: 5rem;
+    }
+    
+    .awards-section {
+        padding: 8rem 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .award-badge {
+        width: 120px;
+        height: 120px;
+        padding: 6px;
+    }
+    
+    .awards-showcase {
+        gap: 2.5rem;
     }
 }
 
