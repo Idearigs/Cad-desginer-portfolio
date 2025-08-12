@@ -101,10 +101,14 @@
                 muted 
                 loop 
                 playsinline
-                preload="auto"
-                title="Background Video">
+                preload="metadata"
+                crossorigin="anonymous"
+                title="Background Video"
+                poster="images/placeholder.svg">
+                <source src="./images/video.mp4" type="video/mp4">
                 <source src="images/video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
+                <!-- Fallback for older browsers -->
+                <p>Your browser does not support the video tag. Please update your browser or <a href="images/video.mp4">download the video</a>.</p>
             </video>
         </div>
         
@@ -473,6 +477,7 @@
     <script src="js/animations.js" defer></script>
     <script src="js/contact-form.js" defer></script>
     <script src="js/hero-animation.js"></script>
+    <script src="js/video-handler.js"></script>
     <script src="js/mobile-nav.js"></script>
     <script src="scripts/header.js"></script>
     <script src="scripts/reveal.js"></script>
