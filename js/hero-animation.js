@@ -9,9 +9,9 @@
     // Text array for cycling animation
     const heroTexts = [
         'PRECISION',
-        'EXCELLENCE',
-        'ARTISTRY',
-        'INNOVATION'
+        'CRAFTSMANSHIP', 
+        'INNOVATION',
+        'ARTISTRY'
     ];
     
     let currentIndex = 0;
@@ -20,35 +20,50 @@
     function updateHeroText() {
         if (!heroTitle) return;
         
-        // Fade out current text
+        // Add slide-out effect
+        heroTitle.style.transition = 'all 0.6s ease-in-out';
         heroTitle.style.opacity = '0';
+        heroTitle.style.transform = 'translateY(-30px)';
         
         setTimeout(() => {
             // Update text
             heroTitle.textContent = heroTexts[currentIndex];
             
-            // Fade in new text
-            heroTitle.style.opacity = '1';
+            // Reset position and fade in with slide-up effect
+            heroTitle.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                heroTitle.style.opacity = '1';
+                heroTitle.style.transform = 'translateY(0)';
+            }, 50);
             
             // Move to next text
             currentIndex = (currentIndex + 1) % heroTexts.length;
-        }, 500); // Half second delay for smooth transition
+        }, 600); // Wait for slide-out animation
     }
     
     // Initialize animation
     function initHeroAnimation() {
         if (!heroTitle) return;
         
-        // Set initial text
+        // Set initial text with entrance animation
         heroTitle.textContent = heroTexts[0];
-        heroTitle.style.opacity = '1';
+        heroTitle.style.opacity = '0';
+        heroTitle.style.transform = 'translateY(30px)';
+        heroTitle.style.transition = 'all 0.8s ease-out';
         
-        // Start cycling after 3 seconds
+        // Animate in the first text
+        setTimeout(() => {
+            heroTitle.style.opacity = '1';
+            heroTitle.style.transform = 'translateY(0)';
+        }, 500);
+        
+        // Start cycling after 4 seconds
         setTimeout(() => {
             updateHeroText();
-            // Continue cycling every 3 seconds
-            setInterval(updateHeroText, 3000);
-        }, 3000);
+            // Continue cycling every 4 seconds
+            setInterval(updateHeroText, 4000);
+        }, 4000);
     }
     
     // Start animation when DOM is ready
