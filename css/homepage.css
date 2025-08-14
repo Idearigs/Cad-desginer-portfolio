@@ -37,8 +37,8 @@ html {
     z-index: 1;
 }
 
-/* Hero Video Element - Full Screen Coverage */
-#heroVideo {
+/* Hero Video Elements - Responsive Implementation */
+.hero-video {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -47,36 +47,65 @@ html {
     width: auto;
     height: auto;
     transform: translate(-50%, -50%);
-    object-fit: cover;
-    object-position: center;
-    opacity: 0;
+    opacity: 0.4;
     transition: opacity 1s ease;
     pointer-events: none;
     z-index: 1;
 }
 
-#heroVideo.loaded {
+/* Desktop and Mobile MP4 videos */
+#heroVideoDesktop,
+#heroVideoMobile {
+    object-fit: cover;
+    object-position: center;
+}
+
+#heroVideoDesktop.loaded,
+#heroVideoMobile.loaded {
     opacity: 0.4;
 }
 
-@media (max-width: 768px) {
-    #heroVideo.loaded {
-        opacity: 0.3;
-    }
-}
-
-/* Hide video controls completely */
-#heroVideo::-webkit-media-controls,
-#heroVideo::-webkit-media-controls-enclosure,
-#heroVideo::-webkit-media-controls-panel,
-#heroVideo::-webkit-media-controls-play-button,
-#heroVideo::-webkit-media-controls-start-playback-button {
+/* Hide video controls for both desktop and mobile */
+#heroVideoDesktop::-webkit-media-controls,
+#heroVideoDesktop::-webkit-media-controls-enclosure,
+#heroVideoDesktop::-webkit-media-controls-panel,
+#heroVideoDesktop::-webkit-media-controls-play-button,
+#heroVideoDesktop::-webkit-media-controls-start-playback-button,
+#heroVideoMobile::-webkit-media-controls,
+#heroVideoMobile::-webkit-media-controls-enclosure,
+#heroVideoMobile::-webkit-media-controls-panel,
+#heroVideoMobile::-webkit-media-controls-play-button,
+#heroVideoMobile::-webkit-media-controls-start-playback-button {
     display: none !important;
     -webkit-appearance: none;
 }
 
-#heroVideo::-moz-media-controls {
+#heroVideoDesktop::-moz-media-controls,
+#heroVideoMobile::-moz-media-controls {
     display: none !important;
+}
+
+/* Responsive Display Controls */
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+    
+    .mobile-only {
+        display: block;
+    }
+    
+    .hero-video {
+        opacity: 0.3;
+    }
 }
 
 /* Fallback Background */

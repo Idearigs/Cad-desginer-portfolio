@@ -97,16 +97,32 @@
     <section id="hero" class="hero-section">
         <!-- Background Media -->
         <div class="hero-background">
+            <!-- Desktop MP4 Video -->
             <video 
-                id="heroVideo"
-                class="hero-video"
+                id="heroVideoDesktop"
+                class="hero-video desktop-only"
                 autoplay 
                 muted 
                 loop 
                 playsinline
-                preload="metadata">
+                preload="auto"
+                controls="false">
                 <source src="images/video.mp4" type="video/mp4">
             </video>
+            
+            <!-- Mobile MP4 Video -->
+            <video 
+                id="heroVideoMobile"
+                class="hero-video mobile-only"
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                preload="auto"
+                controls="false">
+                <source src="images/video.mp4" type="video/mp4">
+            </video>
+            
             <div class="hero-fallback-bg"></div>
         </div>
         

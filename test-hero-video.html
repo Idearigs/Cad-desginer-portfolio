@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hero Video Test</title>
+    <style>
+        body { background: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; }
+        video { width: 100%; max-width: 800px; height: auto; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #333; }
+        .success { background: #1a4a1a; }
+        .error { background: #4a1a1a; }
+    </style>
+</head>
+<body>
+    <h1>Hero Video Diagnostics</h1>
+    
+    <div class="test">
+        <h3>1. Direct Video Test (with controls)</h3>
+        <video controls muted>
+            <source src="images/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p id="test1Result">Testing...</p>
+    </div>
+    
+    <div class="test">
+        <h3>2. Autoplay Test (like hero section)</h3>
+        <video id="autoplayTest" autoplay muted loop playsinline preload="auto">
+            <source src="images/video.mp4" type="video/mp4">
+        </video>
+        <p id="test2Result">Testing...</p>
+    </div>
+    
+    <div class="test">
+        <h3>3. Video File Information</h3>
+        <p id="videoInfo">Loading...</p>
+    </div>
+    
+    <div class="test">
+        <h3>4. YouTube Alternative</h3>
+        <p>If you want YouTube instead, provide the video URL and I'll implement it.</p>
+        <div style="background: #333; padding: 10px; margin: 10px 0;">
+            YouTube embed example:<br>
+            <iframe width="400" height="225" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Test 1: Direct video
+        const video1 = document.querySelector('video');
+        video1.addEventListener('loadeddata', () => {
+            document.getElementById('test1Result').innerHTML = '✅ Video file loads successfully';
+            document.getElementById('test1Result').parentElement.classList.add('success');
+        });
+        video1.addEventListener('error', (e) => {
+            document.getElementById('test1Result').innerHTML = '❌ Video file failed to load: ' + e.message;
+            document.getElementById('test1Result').parentElement.classList.add('error');
+        });
+        
+        // Test 2: Autoplay
+        const video2 = document.getElementById('autoplayTest');
+        video2.addEventListener('loadeddata', () => {
+            document.getElementById('test2Result').innerHTML = '✅ Autoplay video loaded';
+        });
+        video2.addEventListener('play', () => {
+            document.getElementById('test2Result').innerHTML = '✅ Autoplay video is playing';
+            document.getElementById('test2Result').parentElement.classList.add('success');
+        });
+        video2.addEventListener('error', (e) => {
+            document.getElementById('test2Result').innerHTML = '❌ Autoplay failed: ' + e.message;
+            document.getElementById('test2Result').parentElement.classList.add('error');
+        });
+        
+        // Test 3: File info
+        setTimeout(() => {
+            fetch('images/video.mp4', { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        const size = response.headers.get('content-length');
+                        document.getElementById('videoInfo').innerHTML = `
+                            ✅ Video file exists<br>
+                            File size: ${size ? (size/1024/1024).toFixed(2) + ' MB' : 'Unknown'}<br>
+                            Content type: ${response.headers.get('content-type') || 'Unknown'}
+                        `;
+                    } else {
+                        document.getElementById('videoInfo').innerHTML = `❌ Video file not accessible (Status: ${response.status})`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('videoInfo').innerHTML = `❌ Error accessing video: ${error.message}`;
+                });
+        }, 1000);
+        
+        console.log('Hero video test page loaded');
+        console.log('Current location:', window.location.href);
+    </script>
+</body>
+</html>
