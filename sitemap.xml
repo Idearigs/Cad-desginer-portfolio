@@ -4,22 +4,22 @@
   
   <!-- Homepage - Highest priority -->
   <url>
-    <loc>https://chamaljayaratna.com/</loc>
+    <loc>https://chamaljayaratnadesign.com/</loc>
     <lastmod>2025-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://chamaljayaratna.com/images/chamal-logo.png</image:loc>
+      <image:loc>https://chamaljayaratnadesign.com/images/chamal-logo.png</image:loc>
       <image:title>Chamal Jayaratna Logo</image:title>
       <image:caption>Award-winning jewelry designer and CAD artisan</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://chamaljayaratna.com/images/001.jpg</image:loc>
+      <image:loc>https://chamaljayaratnadesign.com/images/001.jpg</image:loc>
       <image:title>Custom Diamond Ring Design</image:title>
       <image:caption>Octopus ring design by Chamal Jayaratna</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://chamaljayaratna.com/images/01.jpg</image:loc>
+      <image:loc>https://chamaljayaratnadesign.com/images/01.jpg</image:loc>
       <image:title>Lady in Red Ring Design</image:title>
       <image:caption>Elegant diamond ring crafted by Chamal Jayaratna</image:caption>
     </image:image>
@@ -27,12 +27,12 @@
   
   <!-- Gallery Page -->
   <url>
-    <loc>https://chamaljayaratna.com/gallery.html</loc>
+    <loc>https://chamaljayaratnadesign.com/gallery</loc>
     <lastmod>2025-01-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://chamaljayaratna.com/images/001157.jpg</image:loc>
+      <image:loc>https://chamaljayaratnadesign.com/images/001157.jpg</image:loc>
       <image:title>Twisted Pearl Design</image:title>
       <image:caption>Custom jewelry design showcasing traditional craftsmanship</image:caption>
     </image:image>
@@ -40,7 +40,7 @@
   
   <!-- News Page -->
   <url>
-    <loc>https://chamaljayaratna.com/news.html</loc>
+    <loc>https://chamaljayaratnadesign.com/news</loc>
     <lastmod>2025-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -48,7 +48,7 @@
   
   <!-- Thank You Page -->
   <url>
-    <loc>https://chamaljayaratna.com/thank-you.html</loc>
+    <loc>https://chamaljayaratnadesign.com/thank-you</loc>
     <lastmod>2025-01-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

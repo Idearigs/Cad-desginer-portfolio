@@ -21,7 +21,7 @@ Allow: /images/
 Allow: /styles/
 
 # Sitemap location
-Sitemap: https://chamaljayaratna.com/sitemap.xml
+Sitemap: https://chamaljayaratnadesign.com/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
