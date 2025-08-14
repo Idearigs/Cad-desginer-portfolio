@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create ICO Favicon</title>
+</head>
+<body>
+    <h2>ICO Favicon Creator</h2>
+    <canvas id="faviconCanvas" width="32" height="32" style="border: 1px solid #ccc;"></canvas>
+    <br><br>
+    <button onclick="downloadFavicon()">Download as ICO</button>
+    <br><br>
+    <p>Instructions: This creates a simple "C" favicon for jewelry designer.</p>
+    
+    <script>
+        const canvas = document.getElementById('faviconCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Draw background circle with gold gradient
+        const gradient = ctx.createLinearGradient(0, 0, 32, 32);
+        gradient.addColorStop(0, '#FFD700');
+        gradient.addColorStop(0.5, '#FFA500');
+        gradient.addColorStop(1, '#DAA520');
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(16, 16, 15, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Draw border
+        ctx.strokeStyle = '#B8860B';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        
+        // Draw letter "C"
+        ctx.fillStyle = 'white';
+        ctx.strokeStyle = '#B8860B';
+        ctx.lineWidth = 0.5;
+        ctx.font = 'bold 18px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('C', 16, 16);
+        ctx.strokeText('C', 16, 16);
+        
+        function downloadFavicon() {
+            // Convert canvas to blob and download
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'favicon.ico';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+    </script>
+</body>
+</html>

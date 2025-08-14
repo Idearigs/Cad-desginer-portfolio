@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resource Test</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+</head>
+<body>
+    <h1>Resource Loading Test</h1>
+    
+    <h2>Favicon Test</h2>
+    <p>Check the browser tab for favicon (golden C in circle)</p>
+    
+    <h2>Video Test</h2>
+    <video controls width="400" style="border: 2px solid #ccc;">
+        <source src="./images/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <h2>Image Test</h2>
+    <img src="./images/chamal-logo.png" alt="Logo" style="max-width: 300px; border: 1px solid #ccc;">
+    
+    <h2>URL Information</h2>
+    <div id="urlInfo"></div>
+    
+    <script>
+        document.getElementById('urlInfo').innerHTML = `
+            <strong>Current URL:</strong> ${window.location.href}<br>
+            <strong>Origin:</strong> ${window.location.origin}<br>
+            <strong>Pathname:</strong> ${window.location.pathname}<br>
+            <strong>Hostname:</strong> ${window.location.hostname}<br>
+        `;
+    </script>
+</body>
+</html>

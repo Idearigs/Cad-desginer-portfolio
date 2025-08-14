@@ -68,11 +68,15 @@ class HeroVideoHandler {
         console.log(`--- ${deviceType.toUpperCase()} VIDEO FILE ACCESSIBILITY CHECK ---`);
         
         const videoSrc = './images/video.mp4';
-        const fullVideoURL = window.location.origin + '/' + videoSrc.replace('./', '');
+        // Use relative path for local development
+        const currentPath = window.location.pathname.replace(/\/[^\/]*$/, '/');
+        const basePath = window.location.origin + currentPath;
+        const fullVideoURL = basePath + 'images/video.mp4';
         
+        console.log('🌍 Current location:', window.location.href);
         console.log('📁 Checking video file:', videoSrc);
         console.log('🔗 Full video URL:', fullVideoURL);
-        console.log('📂 Expected file location:', fullVideoURL);
+        console.log('📂 Base path:', basePath);
         
         try {
             const startTime = performance.now();
