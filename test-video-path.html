@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Path Test</title>
+</head>
+<body>
+    <h2>Video Path Diagnostic</h2>
+    <div id="results"></div>
+    
+    <video id="testVideo" controls width="400" style="display: block; margin: 20px 0;">
+        <source src="./images/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <script>
+        const results = document.getElementById('results');
+        const testVideo = document.getElementById('testVideo');
+        
+        function log(message) {
+            results.innerHTML += message + '<br>';
+            console.log(message);
+        }
+        
+        log('🌍 Current URL: ' + window.location.href);
+        log('📁 Base URL: ' + window.location.origin);
+        log('📂 Directory: ' + window.location.pathname);
+        
+        // Test video paths
+        const testPaths = [
+            './images/video.mp4',
+            'images/video.mp4',
+            '/images/video.mp4',
+            window.location.origin + '/images/video.mp4'
+        ];
+        
+        testPaths.forEach((path, index) => {
+            fetch(path)
+                .then(response => {
+                    if (response.ok) {
+                        log(`✅ Path ${index + 1} SUCCESS: ${path}`);
+                    } else {
+                        log(`❌ Path ${index + 1} FAILED: ${path} (${response.status})`);
+                    }
+                })
+                .catch(error => {
+                    log(`❌ Path ${index + 1} ERROR: ${path} (${error.message})`);
+                });
+        });
+        
+        // Monitor video element
+        testVideo.addEventListener('loadstart', () => log('🎬 Video: Load started'));
+        testVideo.addEventListener('loadeddata', () => log('✅ Video: Data loaded'));
+        testVideo.addEventListener('error', (e) => log('❌ Video error: ' + e.message));
+        
+        setTimeout(() => {
+            log('🔍 Video current src: ' + (testVideo.currentSrc || 'None'));
+            log('🔍 Video ready state: ' + testVideo.readyState);
+            log('🔍 Video network state: ' + testVideo.networkState);
+        }, 2000);
+    </script>
+</body>
+</html>

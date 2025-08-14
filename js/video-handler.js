@@ -67,12 +67,12 @@ class HeroVideoHandler {
     async checkVideoFileAccessibility(deviceType) {
         console.log(`--- ${deviceType.toUpperCase()} VIDEO FILE ACCESSIBILITY CHECK ---`);
         
-        const videoSrc = 'images/video.mp4';
-        const fullVideoURL = new URL(videoSrc, window.location.href).href;
+        const videoSrc = './images/video.mp4';
+        const fullVideoURL = window.location.origin + '/' + videoSrc.replace('./', '');
         
         console.log('📁 Checking video file:', videoSrc);
         console.log('🔗 Full video URL:', fullVideoURL);
-        console.log('📂 Expected file location:', window.location.origin + '/' + videoSrc);
+        console.log('📂 Expected file location:', fullVideoURL);
         
         try {
             const startTime = performance.now();

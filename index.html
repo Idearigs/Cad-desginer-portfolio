@@ -3,9 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chamal Jayaratna - CAD Designer Portfolio</title>
-    <meta name="description" content="Portfolio of Chamal Jayaratna, CAD Designer specializing in precision engineering and digital artistry" />
+    <title>Chamal Jayaratna | Award-Winning Jewelry Designer & CAD Artisan Sri Lanka</title>
+    <meta name="description" content="Chamal Jayaratna, master jewelry designer from Sri Lanka with 20+ years experience. Award-winning custom engagement rings, wedding bands, and luxury jewelry using precision CAD design and traditional craftsmanship." />
+    <meta name="keywords" content="jewelry designer sri lanka, custom engagement rings, wedding bands, luxury jewelry, CAD jewelry design, chamal jayaratna, bespoke jewelry, diamond rings, gold jewelry, jewelry artisan, precision jewelry" />
     <meta name="author" content="Chamal Jayaratna" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://chamaljayaratna.com/" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Chamal Jayaratna | Award-Winning Jewelry Designer & CAD Artisan Sri Lanka" />
+    <meta property="og:description" content="Master jewelry designer with 20+ years experience creating custom engagement rings, wedding bands, and luxury jewelry using precision CAD design." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chamaljayaratna.com/" />
+    <meta property="og:image" content="https://chamaljayaratna.com/images/chamal-logo.png" />
+    <meta property="og:site_name" content="Chamal Jayaratna Jewelry Designer" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Chamal Jayaratna | Award-Winning Jewelry Designer Sri Lanka" />
+    <meta name="twitter:description" content="Master jewelry designer creating custom engagement rings, wedding bands, and luxury jewelry with precision CAD design." />
+    <meta name="twitter:image" content="https://chamaljayaratna.com/images/chamal-logo.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Chamal Jayaratna",
+      "jobTitle": "Master Jewelry Designer",
+      "description": "Award-winning jewelry designer and CAD artisan specializing in custom engagement rings, wedding bands, and luxury jewelry",
+      "url": "https://chamaljayaratna.com",
+      "image": "https://chamaljayaratna.com/images/chamal-logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Colombo",
+        "addressCountry": "Sri Lanka"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+94777783055",
+        "email": "hello@chamaljayaratna.com",
+        "contactType": "customer service"
+      },
+      "sameAs": []
+    }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,6 +72,21 @@
     <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/luxury.css">
+    
+    <!-- SEO Optimization Styles -->
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
     <!-- Original Navigation with Mobile Enhancement -->
@@ -39,7 +103,7 @@
                 
                 <!-- Desktop Menu -->
                 <div class="nav-menu desktop-menu">
-                    <button onclick="scrollToSection('hero')">Home</button>
+                    <button onclick="window.location.href='/'">Home</button>
                     <button onclick="scrollToSection('about')">About</button>
                     <button onclick="scrollToSection('signature')">Collections</button>
                     <button onclick="window.location.href='gallery.html'">Gallery</button>
@@ -73,7 +137,7 @@
 
                 <!-- Navigation Menu -->
                 <div class="mobile-nav">
-                    <a href="#hero" class="mobile-nav-link" onclick="scrollToSection('hero')">Home</a>
+                    <a href="/" class="mobile-nav-link">Home</a>
                     <a href="#about" class="mobile-nav-link" onclick="scrollToSection('about')">About</a>
                     <a href="#signature" class="mobile-nav-link" onclick="scrollToSection('signature')">Collections</a>
                     <a href="gallery.html" class="mobile-nav-link" onclick="scrollToSection('work')">Gallery</a>
@@ -86,7 +150,7 @@
                     <div class="mobile-contact-info">
                         <p>For inquiries and consultations</p>
                         <p><a href="mailto:hello@chamaljayaratna.com">hello@chamaljayaratna.com</a></p>
-                        <p><a href="tel:+94123456789">+94 123 456 789</a></p>
+                        <p><a href="tel:+94777783055">+94 77 778 3055</a></p>
                     </div>
                 </div>
             </div>
@@ -107,7 +171,7 @@
                 playsinline
                 preload="auto"
                 controls="false">
-                <source src="images/video.mp4" type="video/mp4">
+                <source src="./images/video.mp4" type="video/mp4">
             </video>
             
             <!-- Mobile MP4 Video -->
@@ -120,7 +184,7 @@
                 playsinline
                 preload="auto"
                 controls="false">
-                <source src="images/video.mp4" type="video/mp4">
+                <source src="./images/video.mp4" type="video/mp4">
             </video>
             
             <div class="hero-fallback-bg"></div>
@@ -130,7 +194,7 @@
         <div class="hero-overlay">
             <div class="hero-content">
                 <div class="hero-text-animation">
-                    <h1 id="heroTitle" class="hero-title">PRECISION</h1>
+                    <h1 id="heroTitle" class="hero-title">PRECISION JEWELRY DESIGN</h1>
                 </div>
             </div>
             
@@ -142,8 +206,9 @@
     </section>
 
     <!-- Awards Section -->
-    <section id="awards" class="awards-section">
+    <section id="awards" class="awards-section" aria-labelledby="awards-heading">
         <div class="lx-container">
+            <h2 id="awards-heading" class="sr-only">Awards and Recognition</h2>
             <div class="awards-showcase">
                 <!-- First set of awards -->
                 <img src="images/awards/2015  ELLE DESIGN AWARD USA.jpg" alt="2015 ELLE Design Award USA" class="award-badge" data-reveal>
@@ -186,8 +251,8 @@
     <section id="signature" class="lx-section" aria-labelledby="sig">
         <div class="lx-container">
             <header class="lx-head" data-reveal>
-                <p class="overline">SIGNATURE COLLECTIONS</p>
-                <h2 id="sig" class="lx-title">Award Winning Designs</h2>
+                <p class="overline">SIGNATURE JEWELRY COLLECTIONS</p>
+                <h2 id="sig" class="lx-title">Award-Winning Custom Diamond Rings & Luxury Jewelry</h2>
                 <span class="gold-line" aria-hidden="true"></span>
             </header>
 
@@ -246,8 +311,8 @@
     <section id="work" class="lx-section" aria-labelledby="featured">
         <div class="lx-container">
             <header class="lx-head" data-reveal>
-                <p class="overline">FEATURED SELECTION</p>
-                <h2 id="featured" class="lx-title">Innovations</h2>
+                <p class="overline">FEATURED JEWELRY SELECTION</p>
+                <h2 id="featured" class="lx-title">Handcrafted Innovations in Gold & Diamonds</h2>
                 <span class="gold-line" aria-hidden="true"></span>
             </header>
             
@@ -339,12 +404,13 @@
         <div class="lx-container">
             <div class="about-content">
                 <div class="about-text" data-reveal>
-                    <h2 class="lx-title">Mastery Through Passion</h2>
+                    <h2 class="lx-title">Master Jewelry Designer & CAD Artisan</h2>
                     <div class="about-description">
-                       <p>With over 20 years of experience in jewellery design and development, I bridge the gap between traditional goldsmithing and modern digital craftsmanship. My journey began in the workshops of Colombo, where I learned the sacred art of metalworking from master craftsmen.</p> 
-                       <p>Today, I combine this rich heritage with cutting-edge design technologies, creating timeless pieces that honor tradition while embracing innovation.</p>
+                       <p>With over 20 years of experience in <strong>custom jewelry design</strong> and development, I specialize in creating <strong>bespoke engagement rings</strong>, <strong>wedding bands</strong>, and luxury jewelry pieces. My journey began in the traditional goldsmithing workshops of <strong>Colombo, Sri Lanka</strong>, where I learned the sacred art of metalworking from master craftsmen.</p> 
+                       <p>Today, I combine this rich heritage with cutting-edge <strong>CAD design technologies</strong>, creating timeless pieces that honor tradition while embracing innovation. From <strong>diamond rings</strong> to <strong>custom necklaces</strong>, each piece tells a unique story of precision craftsmanship and artistic excellence.</p>
+                       <p>My work has been recognized internationally with prestigious awards including the <strong>2018 Presidential Gold Award</strong> and <strong>2017 Jewellery This USA Award</strong>.</p>
                     </div>
-                    <a href="#contact" class="contact-link">Contact</a>
+                    <a href="#contact" class="contact-link">Start Your Custom Design</a>
                 </div>
                 <div class="about-image" data-reveal>
                     <img src="images/CHAMAL JAYARATNA HDA250575.jpg" alt="Chamal Jayaratna, Master CAD Jewelry Designer">
@@ -390,8 +456,8 @@
             <div class="contact-content">
                 <div class="contact-info" data-reveal>
                     <div class="overline">GET IN TOUCH</div>
-                    <h2 class="lx-title">Start Your Commission</h2>
-                    <p>Ready to create something extraordinary? Let's discuss your vision and bring it to life through precision design and masterful craftsmanship.</p>
+                    <h2 class="lx-title">Start Your Custom Jewelry Commission</h2>
+                    <p>Ready to create something extraordinary? Whether you're looking for a <strong>custom engagement ring</strong>, <strong>anniversary gift</strong>, or <strong>luxury jewelry piece</strong>, let's discuss your vision and bring it to life through precision CAD design and masterful craftsmanship in <strong>gold</strong>, <strong>platinum</strong>, and <strong>diamonds</strong>.</p>
                     
                     <div class="contact-details">
                         <div class="contact-item">
@@ -404,7 +470,7 @@
                         </div>
                         <div class="contact-item">
                             <span class="contact-label">Phone</span>
-                            <span class="contact-value">+94 123 456 789</span>
+                            <span class="contact-value">+94 77 778 3055</span>
                         </div>
                     </div>
                 </div>
@@ -471,7 +537,7 @@
                     <div class="footer-section">
                         <h4>Contact</h4>
                         <p><a href="mailto:hello@chamaljayaratna.com">hello@chamaljayaratna.com</a><br>
-                        <a href="tel:+94123456789">+94 123 456 789</a></p>
+                        <a href="tel:+94777783055">+94 77 778 3055</a></p>
                     </div>
                 </div>
             </div>

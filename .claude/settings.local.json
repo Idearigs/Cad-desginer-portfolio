@@ -3,6 +3,7 @@
     "allow": [
       "WebFetch(domain:www.youtube.com)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "acceptEdits"
   }
 }

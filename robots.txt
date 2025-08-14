@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and API directories for security
+Disallow: /api/
+Disallow: /admin.html
+Disallow: /includes/
+Disallow: /logs/
+Disallow: /uploads/
+Disallow: /storage/
+Disallow: /debug*
+Disallow: /test*
+Disallow: /migrations/
+Disallow: /scripts/
+Disallow: /create-favicon.html
+
+# Allow important files
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /styles/
+
+# Sitemap location
+Sitemap: https://chamaljayaratna.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
