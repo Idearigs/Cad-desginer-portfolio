@@ -34,6 +34,7 @@ class ContactFormHandler {
             await this.submitWithFetch();
         } catch (error) {
             console.log('Fetch failed, falling back to traditional submission:', error);
+            // For CORS or network errors, use fallback method
             this.submitWithFallback();
         }
     }
@@ -49,7 +50,8 @@ class ContactFormHandler {
             body: formData,
             headers: {
                 'Accept': 'application/json'
-            }
+            },
+            mode: 'cors'
         });
         
         // Check if response is ok
