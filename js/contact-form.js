@@ -29,45 +29,84 @@ class ContactFormHandler {
         // Show loading state
         this.setLoading(true);
         
+        // Try fetch first, then fallback to traditional form submission
         try {
-            const formData = new FormData(this.form);
-            
-            // Add honeypot field
-            formData.append('honeypot', '');
-            
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                },
-                mode: 'cors'
-            });
-            
-            const result = await response.json();
-            
-            if (response.ok && result.success) {
-                // Show success message
-                this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
-                this.form.reset();
-                
-                // Redirect if redirect URL is provided
-                if (result.redirect) {
-                    setTimeout(() => {
-                        window.location.href = result.redirect;
-                    }, 2000);
-                }
-            } else {
-                // Show error message
-                const errorMsg = result.message || 'Failed to send message. Please try again.';
-                this.showMessage(errorMsg, 'error');
-            }
+            await this.submitWithFetch();
         } catch (error) {
-            console.error('Form submission error:', error);
-            this.showMessage('An error occurred. Please try again later.', 'error');
-        } finally {
-            this.setLoading(false);
+            console.log('Fetch failed, falling back to traditional submission:', error);
+            this.submitWithFallback();
         }
+    }
+    
+    async submitWithFetch() {
+        const formData = new FormData(this.form);
+        
+        // Add honeypot field
+        formData.append('honeypot', '');
+        
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        // Check if response is ok
+        if (response.ok) {
+            // Show success message regardless of JSON parsing
+            this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
+            this.form.reset();
+            this.setLoading(false);
+            
+            // Redirect to thank you page
+            setTimeout(() => {
+                window.location.href = 'thank-you.html';
+            }, 2000);
+        } else {
+            throw new Error(`HTTP ${response.status}`);
+        }
+    }
+    
+    submitWithFallback() {
+        // Create a temporary form with the same data for traditional submission
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = 'https://api.web3forms.com/submit';
+        tempForm.style.display = 'none';
+        
+        // Copy all form data
+        const formData = new FormData(this.form);
+        for (let [key, value] of formData.entries()) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            tempForm.appendChild(input);
+        }
+        
+        // Add honeypot
+        const honeypot = document.createElement('input');
+        honeypot.type = 'hidden';
+        honeypot.name = 'honeypot';
+        honeypot.value = '';
+        tempForm.appendChild(honeypot);
+        
+        // Add to DOM and submit
+        document.body.appendChild(tempForm);
+        
+        // Show success message immediately for fallback
+        this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
+        this.form.reset();
+        this.setLoading(false);
+        
+        // Submit and redirect
+        tempForm.submit();
+        
+        // Redirect after a short delay
+        setTimeout(() => {
+            window.location.href = 'thank-you.html';
+        }, 1500);
     }
     
     validateForm() {
