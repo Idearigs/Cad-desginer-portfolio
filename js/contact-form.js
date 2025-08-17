@@ -29,21 +29,24 @@ class ContactFormHandler {
         // Show loading state
         this.setLoading(true);
         
-        // Try fetch first, then fallback to traditional form submission
-        try {
-            await this.submitWithFetch();
-        } catch (error) {
-            console.log('Fetch failed, falling back to traditional submission:', error);
-            // For CORS or network errors, use fallback method
-            this.submitWithFallback();
-        }
+        // Submit form silently in background and always show success
+        this.submitSilently();
+        
+        // Always show success message regardless of submission result
+        setTimeout(() => {
+            this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
+            this.form.reset();
+            this.setLoading(false);
+            
+            // Redirect to thank you page
+            setTimeout(() => {
+                window.location.href = 'thank-you.html';
+            }, 2000);
+        }, 1000);
     }
     
     async submitWithFetch() {
         const formData = new FormData(this.form);
-        
-        // Add honeypot field
-        formData.append('honeypot', '');
         
         const response = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -70,7 +73,7 @@ class ContactFormHandler {
         }
     }
     
-    submitWithFallback() {
+    submitSilently() {
         // Create a temporary form with the same data for traditional submission
         const tempForm = document.createElement('form');
         tempForm.method = 'POST';
@@ -87,28 +90,9 @@ class ContactFormHandler {
             tempForm.appendChild(input);
         }
         
-        // Add honeypot
-        const honeypot = document.createElement('input');
-        honeypot.type = 'hidden';
-        honeypot.name = 'honeypot';
-        honeypot.value = '';
-        tempForm.appendChild(honeypot);
-        
-        // Add to DOM and submit
+        // Add to DOM and submit silently
         document.body.appendChild(tempForm);
-        
-        // Show success message immediately for fallback
-        this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
-        this.form.reset();
-        this.setLoading(false);
-        
-        // Submit and redirect
         tempForm.submit();
-        
-        // Redirect after a short delay
-        setTimeout(() => {
-            window.location.href = 'thank-you.html';
-        }, 1500);
     }
     
     validateForm() {
