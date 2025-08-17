@@ -159,33 +159,19 @@
     <section id="hero" class="hero-section">
         <!-- Background Media -->
         <div class="hero-background">
-            <!-- Desktop MP4 Video -->
+            <!-- Single Video for All Devices -->
             <video 
-                id="heroVideoDesktop"
-                class="hero-video desktop-only"
+                class="hero-video"
                 autoplay 
                 muted 
                 loop 
                 playsinline
                 preload="auto"
-                controls="false">
+                disablepictureinpicture
+                webkit-playsinline>
                 <source src="./images/video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
-            
-            <!-- Mobile MP4 Video -->
-            <video 
-                id="heroVideoMobile"
-                class="hero-video mobile-only"
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                preload="auto"
-                controls="false">
-                <source src="./images/video.mp4" type="video/mp4">
-            </video>
-            
-            <div class="hero-fallback-bg"></div>
         </div>
         
         <!-- Content Overlay -->
@@ -561,7 +547,6 @@
     <script src="js/animations.js" defer></script>
     <script src="js/contact-form.js" defer></script>
     <script src="js/hero-animation.js"></script>
-    <script src="js/video-handler.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/mobile-nav.js"></script>
     <script src="scripts/header.js"></script>
