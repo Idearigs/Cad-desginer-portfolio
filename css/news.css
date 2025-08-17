@@ -40,6 +40,23 @@
     padding-top: 10rem; /* Added extra padding to account for navbar */
 }
 
+/* Mobile title/description visibility - default (desktop) */
+.mobile-title {
+    display: none;
+}
+
+.desktop-title {
+    display: inline;
+}
+
+.mobile-description {
+    display: none;
+}
+
+.desktop-description {
+    display: inline;
+}
+
 .news-header {
     text-align: center;
     margin-bottom: 4rem;
@@ -438,14 +455,33 @@
     
     .news-section {
         padding: 4rem 0 6rem;
+        padding-top: 7rem; /* Reduced top padding for mobile */
     }
     
     .news-header {
         margin-bottom: 3rem;
+        margin-top: 1.5rem; /* Added top margin for spacing from nav */
     }
     
     .news-card h3 {
         font-size: 1.2rem;
+    }
+    
+    /* Mobile title/description visibility */
+    .desktop-title {
+        display: none;
+    }
+    
+    .mobile-title {
+        display: inline;
+    }
+    
+    .desktop-description {
+        display: none;
+    }
+    
+    .mobile-description {
+        display: inline;
     }
 }
 
