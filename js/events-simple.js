@@ -1,10 +1,15 @@
 /**
- * Simple Events Handler - Guaranteed to Work
+ * Simple Events Handler - Guaranteed to Work with Auto-Slide
  */
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Simple Events Handler Starting');
+    
+    // Global variables for auto-slide
+    let currentEventIndex = 0;
+    let eventsArray = [];
+    let autoSlideInterval = null;
     
     // Simple function to show no events message
     function showNoEventsMessage() {
@@ -32,22 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     transform: translate(-50%, -50%);
                     text-align: center;
                     z-index: 2;
-                    background: rgba(255, 255, 255, 0.95);
                     padding: 2rem 3rem;
-                    backdrop-filter: blur(10px);
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 ">
                     <h3 style="
                         font-family: 'Playfair Display', serif;
                         font-size: 1.8rem;
-                        color: #1a1a1a;
+                        color: #999;
                         margin: 0 0 1rem 0;
                         font-weight: 400;
                         letter-spacing: 0.3px;
                     ">No Events Currently Available</h3>
                     <p style="
                         font-size: 1rem;
-                        color: #666;
+                        color: #777;
                         line-height: 1.6;
                         margin: 0;
                         font-weight: 300;
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.style.margin = '3rem auto';
             container.style.background = '#1a1a1a';
             container.style.overflow = 'hidden';
+            container.style.transition = 'opacity 0.5s ease-in-out';
             
             // Get image URL
             let imageUrl = 'images/placeholder.svg';
@@ -163,6 +166,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
             console.log('✅ Event displayed successfully');
+            console.log('📊 Event details displayed:', {
+                title: event.title,
+                date: event.date,
+                imageUrl: imageUrl
+            });
         } else {
             console.error('❌ Container not found!');
         }
@@ -177,6 +185,41 @@ document.addEventListener('DOMContentLoaded', function() {
             return origin + '/jewellery-designer/cad-art/api/events/index.php';
         }
         return origin + '/api/events/index.php';
+    }
+    
+    // Auto-slide functionality with fade transition
+    function startAutoSlide() {
+        if (eventsArray.length <= 1) {
+            console.log('⏸️ Auto-slide not needed - single event or no events');
+            return;
+        }
+        
+        console.log(`🔄 Starting auto-slide for ${eventsArray.length} events (3-second intervals)`);
+        console.log('📋 Events to cycle through:', eventsArray.map(e => e.title));
+        
+        autoSlideInterval = setInterval(() => {
+            currentEventIndex = (currentEventIndex + 1) % eventsArray.length;
+            const nextEvent = eventsArray[currentEventIndex];
+            console.log(`🔄 Auto-sliding to event ${currentEventIndex + 1}/${eventsArray.length}: "${nextEvent.title}"`);
+            
+            // Fade out, change content, fade in
+            const container = document.getElementById('eventsDisplayContainer');
+            if (container) {
+                container.style.opacity = '0.3';
+                setTimeout(() => {
+                    showEvent(nextEvent);
+                    container.style.opacity = '1';
+                }, 200);
+            }
+        }, 3000); // 3-second intervals
+    }
+    
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+            console.log('⏹️ Auto-slide stopped');
+        }
     }
     
     // Fetch and display events
@@ -196,7 +239,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (data.status === 'success' && Array.isArray(data.data) && data.data.length > 0) {
                 console.log('✅ Events found:', data.data.length);
-                showEvent(data.data[0]); // Show first event
+                console.log('📋 Event titles:', data.data.map(e => e.title));
+                eventsArray = data.data; // Store events for auto-slide
+                currentEventIndex = 0;
+                showEvent(eventsArray[0]); // Show first event
+                
+                // Add manual test buttons for debugging (temporary)
+                addDebugButtons();
+                
+                startAutoSlide(); // Start auto-slide if multiple events
             } else {
                 console.log('📭 No events found');
                 showNoEventsMessage();
@@ -204,6 +255,50 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('❌ Error loading events:', error);
             showNoEventsMessage();
+        }
+    }
+    
+    // Debug function to add manual test buttons (temporary)
+    function addDebugButtons() {
+        if (eventsArray.length <= 1) return;
+        
+        const container = document.getElementById('eventsDisplayContainer');
+        if (container && !document.getElementById('debug-buttons')) {
+            const debugDiv = document.createElement('div');
+            debugDiv.id = 'debug-buttons';
+            debugDiv.style.position = 'absolute';
+            debugDiv.style.top = '10px';
+            debugDiv.style.right = '10px';
+            debugDiv.style.zIndex = '1000';
+            debugDiv.style.background = 'rgba(0,0,0,0.8)';
+            debugDiv.style.padding = '10px';
+            debugDiv.style.borderRadius = '5px';
+            
+            eventsArray.forEach((event, index) => {
+                const button = document.createElement('button');
+                button.textContent = `Event ${index + 1}`;
+                button.style.margin = '2px';
+                button.style.padding = '5px 10px';
+                button.style.fontSize = '12px';
+                button.style.background = '#333';
+                button.style.color = 'white';
+                button.style.border = 'none';
+                button.style.borderRadius = '3px';
+                button.style.cursor = 'pointer';
+                
+                button.onclick = () => {
+                    console.log(`🖱️ Manual switch to event ${index + 1}: "${event.title}"`);
+                    currentEventIndex = index;
+                    showEvent(event);
+                    stopAutoSlide();
+                    startAutoSlide();
+                };
+                
+                debugDiv.appendChild(button);
+            });
+            
+            container.appendChild(debugDiv);
+            console.log('🐛 Debug buttons added for manual testing');
         }
     }
     

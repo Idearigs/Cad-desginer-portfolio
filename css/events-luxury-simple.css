@@ -1,0 +1,116 @@
+/* Simple Luxury Event Banner - Guaranteed to Work */
+
+#eventBanner {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    
+    /* Simple container */
+    position: relative !important;
+    width: 100% !important;
+    max-width: 1000px !important;
+    height: 400px !important;
+    margin: 3rem auto !important;
+    background: #1a1a1a !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Force image to show */
+#eventBannerImg {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1 !important;
+}
+
+/* Content overlay */
+.hidden-event-data {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%) !important;
+    padding: 2rem !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    gap: 1.5rem !important;
+}
+
+/* Date circle */
+.event-date-circle {
+    background: white !important;
+    border-radius: 50% !important;
+    width: 80px !important;
+    height: 80px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+#eventMonth {
+    display: block !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #666 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#eventDay {
+    display: block !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#eventTitle {
+    display: block !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 2rem !important;
+    color: white !important;
+    margin: 0 !important;
+    flex: 1 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Remove any debug indicators */
+#eventBanner::before,
+#eventBanner::after {
+    display: none !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    #eventBanner {
+        height: 280px !important;
+        margin: 2rem 1rem !important;
+    }
+    
+    #eventTitle {
+        font-size: 1.5rem !important;
+    }
+    
+    .event-date-circle {
+        width: 64px !important;
+        height: 64px !important;
+    }
+    
+    #eventDay {
+        font-size: 18px !important;
+    }
+}

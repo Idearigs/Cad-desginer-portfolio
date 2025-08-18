@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:www.youtube.com)",
       "Bash(ffprobe:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

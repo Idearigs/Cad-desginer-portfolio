@@ -1,0 +1,350 @@
+/* Minimal Clean Event Banner - No Overlays, No Animations */
+
+#eventBanner {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    
+    /* Simple clean container */
+    position: relative !important;
+    width: 100% !important;
+    max-width: 1000px !important;
+    height: 400px !important;
+    margin: 3rem auto !important;
+    background: #1a1a1a !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    box-shadow: none !important; /* No shadows */
+}
+
+/* Override reveal-in class for event banner - keep hidden by default */
+#eventBanner.reveal-in {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Show banner when it has content */
+#eventBanner.show,
+#eventBanner.no-events-banner {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* No hover effects */
+#eventBanner:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Event image - completely clean */
+#eventBannerImg {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1 !important;
+}
+
+/* No hover animation on image */
+#eventBanner:hover #eventBannerImg {
+    transform: none !important;
+}
+
+/* Content positioned at bottom left - NO OVERLAY */
+.hidden-event-data {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    background: none !important; /* No background at all */
+    padding: 0 !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    gap: 15px !important;
+    width: auto !important;
+}
+
+/* Smaller date circle - bottom left */
+.event-date-circle {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid rgba(255, 255, 255, 0.9) !important;
+    border-radius: 50% !important;
+    width: 60px !important; /* Smaller */
+    height: 60px !important; /* Smaller */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* No hover animation on date circle */
+#eventBanner:hover .event-date-circle {
+    transform: none !important;
+}
+
+/* Smaller date text */
+#eventMonth {
+    display: block !important;
+    font-size: 9px !important; /* Smaller */
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    color: #666 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+}
+
+#eventDay {
+    display: block !important;
+    font-size: 20px !important; /* Smaller */
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin: 1px 0 0 0 !important;
+    line-height: 1 !important;
+}
+
+/* Smaller title with text shadow for readability */
+#eventTitle {
+    display: block !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.5rem !important; /* Smaller */
+    font-weight: 400 !important;
+    color: white !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important; /* Strong shadow for readability */
+    line-height: 1.2 !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* Remove all indicators and overlays */
+#eventBanner::before,
+#eventBanner::after {
+    display: none !important;
+}
+
+/* Force hide event banner when no events */
+#eventBanner.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Clean no-events state */
+.no-events {
+    display: none !important;
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* No events message inside banner */
+.no-events-message {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+    z-index: 2 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    padding: 2rem 3rem !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.no-events-message h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.8rem !important;
+    color: #1a1a1a !important;
+    margin: 0 0 1rem 0 !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.3px !important;
+}
+
+.no-events-message p {
+    font-size: 1rem !important;
+    color: #666 !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+    font-weight: 300 !important;
+}
+
+.no-events.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Force hide no-events when event banner is visible */
+#eventBanner:not([style*="display: none"]) ~ .no-events {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.no-events-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #666;
+    margin: 0 0 1rem 0;
+    font-weight: 400;
+}
+
+.no-events-content p {
+    font-size: 1rem;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 300;
+}
+
+/* Event indicators for multiple events - smaller and repositioned */
+.event-indicators {
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    display: flex !important;
+    gap: 6px !important;
+    z-index: 3 !important;
+}
+
+.event-indicator {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.event-indicator.active {
+    background: rgba(255, 255, 255, 1) !important;
+}
+
+/* Event counter - smaller */
+.event-counter {
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    color: white !important;
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    z-index: 3 !important;
+    backdrop-filter: blur(5px) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #eventBanner {
+        height: 300px !important;
+        margin: 2rem 1rem !important;
+    }
+    
+    .hidden-event-data {
+        bottom: 15px !important;
+        left: 15px !important;
+        gap: 12px !important;
+    }
+    
+    .event-date-circle {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    #eventMonth {
+        font-size: 8px !important;
+    }
+    
+    #eventDay {
+        font-size: 16px !important;
+    }
+    
+    #eventTitle {
+        font-size: 1.3rem !important;
+    }
+    
+    .no-events-message {
+        padding: 1.5rem 2rem !important;
+    }
+    
+    .no-events-message h3 {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #eventBanner {
+        height: 250px !important;
+        margin: 1.5rem 0.5rem !important;
+    }
+    
+    .hidden-event-data {
+        bottom: 12px !important;
+        left: 12px !important;
+        gap: 10px !important;
+    }
+    
+    .event-date-circle {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    #eventMonth {
+        font-size: 7px !important;
+    }
+    
+    #eventDay {
+        font-size: 14px !important;
+    }
+    
+    #eventTitle {
+        font-size: 1.1rem !important;
+    }
+    
+    .no-events-message {
+        padding: 1rem 1.5rem !important;
+    }
+    
+    .no-events-message h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    .no-events-message p {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* No animations at all */
+#eventBanner.reveal-in {
+    animation: none !important;
+}
+
+@keyframes cleanReveal {
+    from {
+        opacity: 0 !important;
+    }
+    to {
+        opacity: 1 !important;
+    }
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .api-test {
+            background: #e8f4f8;
+            border-color: #2196F3;
+        }
+        
+        .dom-test {
+            background: #fff3e0;
+            border-color: #ff9800;
+        }
+        
+        .simple-test {
+            background: #f3e5f5;
+            border-color: #9c27b0;
+        }
+        
+        .visible-event {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        
+        .event-image {
+            max-width: 300px;
+            height: auto;
+            border: 2px solid #ccc;
+            margin: 10px 0;
+        }
+        
+        .event-details {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        
+        .status.success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+        
+        .status.warning {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .hidden-elements {
+            background: #ffebee;
+            border-color: #f44336;
+        }
+        
+        /* Override any hiding styles */
+        #eventBanner {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            transform: none !important;
+        }
+        
+        #eventBannerImg {
+            display: block !important;
+        }
+        
+        #eventMonth, #eventDay, #eventTitle {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Events System Test Page</h1>
+        <p>This page tests if the events system is working properly.</p>
+        
+        <!-- API Test Section -->
+        <div class="test-section api-test">
+            <h3>📡 API Test</h3>
+            <div id="apiStatus">Testing API connection...</div>
+            <div id="apiData"></div>
+        </div>
+        
+        <!-- DOM Elements Test -->
+        <div class="test-section dom-test">
+            <h3>📦 DOM Elements Test</h3>
+            <div id="domStatus">Checking DOM elements...</div>
+        </div>
+        
+        <!-- Simple Event Display Test -->
+        <div class="test-section simple-test">
+            <h3>🎯 Simple Event Display Test</h3>
+            <div id="simpleEventStatus">Loading simple event display...</div>
+            <div id="simpleEventDisplay"></div>
+        </div>
+        
+        <!-- Copy of Original Event Banner -->
+        <div class="test-section">
+            <h3>🔍 Original Event Banner (Force Visible)</h3>
+            <p>This is a copy of your original event banner with forced visibility:</p>
+            
+            <!-- Simple Event Banner - Force Visible -->
+            <div id="eventBanner" class="simple-event-banner" data-reveal style="display: block !important; opacity: 1 !important;">
+                <img id="eventBannerImg" src="" alt="Event Banner" class="event-image" style="display: block !important;" />
+                <div class="hidden-event-data">
+                    <span id="eventMonth" style="display: block !important; font-size: 20px; font-weight: bold;">MONTH</span>
+                    <span id="eventDay" style="display: block !important; font-size: 20px; font-weight: bold;">DAY</span>
+                    <h3 id="eventTitle" style="display: block !important; font-size: 18px;">Event Title</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hidden Elements Check -->
+        <div class="test-section hidden-elements">
+            <h3>👁️ Hidden Elements Check</h3>
+            <div id="hiddenElementsStatus">Checking for hidden elements...</div>
+        </div>
+        
+        <!-- Console Log -->
+        <div class="test-section">
+            <h3>📋 Console Log</h3>
+            <p>Check the browser console (F12) for detailed logs. You should see:</p>
+            <ul>
+                <li>🎯 EVENTS HANDLER CONSTRUCTOR CALLED</li>
+                <li>✅ Events processed successfully</li>
+                <li>✅ Event banner reveal-in class added</li>
+                <li>✅ Event display complete</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Load the events debug script -->
+    <script src="js/events-debug.js"></script>
+    
+    <!-- Test Scripts -->
+    <script>
+        // API Test
+        async function testAPI() {
+            const apiUrl = window.location.origin + '/api/events/index.php';
+            const statusDiv = document.getElementById('apiStatus');
+            const dataDiv = document.getElementById('apiData');
+            
+            try {
+                console.log('🧪 Testing API:', apiUrl);
+                const response = await fetch(apiUrl);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    statusDiv.innerHTML = '<span class="status success">✅ API Connection Success</span>';
+                    dataDiv.innerHTML = `
+                        <h4>API Response:</h4>
+                        <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                    
+                    // Create simple event display
+                    if (data.status === 'success' && data.data.length > 0) {
+                        const event = data.data[0];
+                        document.getElementById('simpleEventStatus').innerHTML = '<span class="status success">✅ Event Data Found</span>';
+                        document.getElementById('simpleEventDisplay').innerHTML = `
+                            <div class="visible-event">
+                                <h4>📅 Event: ${event.title}</h4>
+                                <p><strong>Date:</strong> ${event.date}</p>
+                                <p><strong>Image:</strong> ${event.image}</p>
+                                <p><strong>Image URL:</strong> ${event.image_url}</p>
+                                ${event.image_url ? `<img src="${event.image_url.replace(/^\/+/, '')}" alt="Event Image" class="event-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                                <p style="display:none; color: red;">❌ Image failed to load: ${event.image_url}</p>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        document.getElementById('simpleEventStatus').innerHTML = '<span class="status warning">⚠️ No Event Data</span>';
+                    }
+                } else {
+                    statusDiv.innerHTML = `<span class="status error">❌ API Error: ${response.status}</span>`;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<span class="status error">❌ API Connection Failed: ${error.message}</span>`;
+                console.error('API Test Error:', error);
+            }
+        }
+        
+        // DOM Elements Test
+        function testDOMElements() {
+            const statusDiv = document.getElementById('domStatus');
+            const elements = [
+                'eventBanner',
+                'eventBannerImg', 
+                'eventMonth',
+                'eventDay',
+                'eventTitle'
+            ];
+            
+            let results = [];
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                const exists = !!element;
+                const visible = element ? window.getComputedStyle(element).display !== 'none' : false;
+                const opacity = element ? window.getComputedStyle(element).opacity : '0';
+                
+                results.push(`
+                    <div style="margin: 5px 0;">
+                        <strong>${id}:</strong> 
+                        ${exists ? '<span class="status success">EXISTS</span>' : '<span class="status error">MISSING</span>'}
+                        ${visible ? '<span class="status success">VISIBLE</span>' : '<span class="status error">HIDDEN</span>'}
+                        <span style="font-size: 12px;">opacity: ${opacity}</span>
+                    </div>
+                `);
+            });
+            
+            statusDiv.innerHTML = results.join('');
+        }
+        
+        // Check for hidden elements
+        function checkHiddenElements() {
+            const statusDiv = document.getElementById('hiddenElementsStatus');
+            const eventBanner = document.getElementById('eventBanner');
+            
+            if (eventBanner) {
+                const styles = window.getComputedStyle(eventBanner);
+                const results = [
+                    `Display: ${styles.display}`,
+                    `Opacity: ${styles.opacity}`,
+                    `Visibility: ${styles.visibility}`,
+                    `Position: ${styles.position}`,
+                    `Transform: ${styles.transform}`,
+                    `Z-Index: ${styles.zIndex}`,
+                    `Width: ${styles.width}`,
+                    `Height: ${styles.height}`
+                ];
+                
+                statusDiv.innerHTML = `
+                    <div class="event-details">
+                        <h4>Event Banner Computed Styles:</h4>
+                        ${results.map(r => `<p>${r}</p>`).join('')}
+                    </div>
+                `;
+            } else {
+                statusDiv.innerHTML = '<span class="status error">❌ Event banner element not found</span>';
+            }
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                testAPI();
+                testDOMElements();
+                checkHiddenElements();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

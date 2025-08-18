@@ -62,9 +62,50 @@
     <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/homepage.css">
-    <link rel="stylesheet" href="css/event-banner.css">
+
     <link rel="stylesheet" href="css/mobile-nav.css">
-    <link rel="stylesheet" href="css/contact-form.css">
+    <link rel="stylesheet" href="css/contact-form-new.css">
+   
+    <!-- <link rel="stylesheet" href="css/custom-events.css"> -->
+    <style>
+        /* Force remove any white backgrounds from events section */
+        #eventsDisplayContainer,
+        #eventsDisplayContainer *,
+        #eventsDisplayContainer div {
+            background: transparent !important;
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Styles ONLY for no-events state - when container has no img elements */
+        #eventsDisplayContainer:not(:has(img)) {
+            height: 200px !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Reduce padding around the text ONLY for no-events */
+        #eventsDisplayContainer:not(:has(img)) > div {
+            padding: 1rem 2rem !important;
+        }
+        
+        /* Text colors for no-events state */
+        #eventsDisplayContainer:not(:has(img)) h3 {
+            color: #999 !important;
+            margin: 0 0 0.5rem 0 !important;
+        }
+        
+        #eventsDisplayContainer:not(:has(img)) p {
+            color: #777 !important;
+            margin: 0 !important;
+        }
+        
+        /* Full height for actual events (when img exists) */
+        #eventsDisplayContainer:has(img) {
+            height: 400px !important;
+            margin: 3rem auto !important;
+        }
+    </style>
     
     <!-- Luxury Design System -->
     <link rel="stylesheet" href="styles/tokens.css">
@@ -169,7 +210,7 @@
                 preload="auto"
                 disablepictureinpicture
                 webkit-playsinline>
-                <source src="./images/video.mp4" type="video/mp4">
+                <source src="./images/video-new.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -406,33 +447,27 @@
 
 
     <!-- Events Section -->
-    <section id="events" class="events-section">
-        <div class="lx-container">
-            <header class="lx-head" data-reveal>
-                <p class="overline">EVENTS & EXHIBITIONS</p>
-                <h2 class="lx-title">Latest Updates</h2>
-                <span class="gold-line" aria-hidden="true"></span>
-            </header>
-            
-            <!-- Simple Event Banner - Shows when events exist -->
-            <div id="eventBanner" class="simple-event-banner" data-reveal style="display: none;">
-                <img id="eventBannerImg" src="" alt="Event Banner" class="event-image" />
-                <div class="hidden-event-data">
-                    <span id="eventMonth" style="display: none;">DEC</span>
-                    <span id="eventDay" style="display: none;">15</span>
-                    <h3 id="eventTitle" style="display: none;">Exclusive Trunk Show</h3>
-                </div>
-            </div>
-            
-            <!-- No Events State -->
-            <div class="no-events" data-reveal>
-                <div class="no-events-content">
-                    <h3>Currently in the Studio</h3>
-                    <p>I'm focused on crafting bespoke pieces for my valued clients. Follow my journey and be the first to know about upcoming exhibitions and new collections.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+ <section id="events" class="events-section">
+      <div class="lx-container">
+          <header class="lx-head" data-reveal>
+              <p class="overline">EVENTS & EXHIBITIONS</p>
+              <h2 class="lx-title">Latest Updates</h2>
+              <span class="gold-line" aria-hidden="true"></span>
+          </header>
+
+          <!-- Custom Events Display Container -->
+          <div id="eventsDisplayContainer" class="events-display-wrapper">
+              <!-- Content will be created dynamically by JavaScript -->
+          </div>
+
+          <!-- Fallback No Events Container -->
+          <div id="noEventsSection" class="fallback-no-events-section" style="display: none;">
+              <div class="fallback-content">
+                  <!-- Fallback content -->
+              </div>
+          </div>
+      </div>
+  </section>
 
     <!-- Contact Form Section -->
     <section id="contact" class="contact-section">
@@ -542,11 +577,11 @@
     <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/events.js" defer></script>
+    
     <script src="js/mobile-nav.js" defer></script>
-    <script src="js/animations.js" defer></script>
-    <script src="js/contact-form.js" defer></script>
-    <script src="js/hero-animation.js"></script>
+    <script src="js/contact-form-new.js" defer></script>
+    <script src="js/events-simple.js" defer></script>
+    <script src="js/hero-animation-new.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/mobile-nav.js"></script>
     <script src="scripts/header.js"></script>
