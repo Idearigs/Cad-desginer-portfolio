@@ -1,0 +1,375 @@
+/**
+ * Expert Carousel Component - Modern Implementation
+ * Built with CSS Grid, Flexbox, and modern CSS features
+ * Maintains exact visual appearance while providing superior functionality
+ */
+
+/* ================================================================
+   SECTION AND CONTAINER
+   ================================================================ */
+
+.expert-carousel-section {
+  padding: clamp(4rem, 8vw, 6rem) 0;
+  background: transparent;
+  position: relative;
+}
+
+.expert-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+.expert-header {
+  text-align: center;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+/* ================================================================
+   CAROUSEL WRAPPER AND LAYOUT
+   ================================================================ */
+
+.expert-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.expert-carousel {
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  position: relative;
+}
+
+/* ================================================================
+   TRACK AND SLIDES - MODERN CSS GRID APPROACH
+   ================================================================ */
+
+.expert-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.expert-slide {
+  flex: 0 0 auto;
+  width: 280px;
+  aspect-ratio: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive slide sizing */
+@media (min-width: 768px) {
+  .expert-slide {
+    width: 320px;
+  }
+}
+
+/* Use original lx-card styling but ensure proper sizing */
+.expert-slide.lx-card {
+  width: 280px;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 768px) {
+  .expert-slide.lx-card {
+    width: 320px;
+  }
+}
+
+/* ================================================================
+   ORIGINAL CARD STYLES COMPATIBILITY
+   ================================================================ */
+
+/* Ensure images display properly in carousel */
+.lx-carousel .lx-card {
+  position: relative !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden !important;
+}
+
+.lx-carousel .lx-card__media {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.lx-carousel .lx-card__media img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.6s ease !important;
+}
+
+/* ================================================================
+   NAVIGATION BUTTONS - ENHANCED UX
+   ================================================================ */
+
+.expert-nav {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.expert-nav:hover {
+  background: rgba(200, 169, 106, 0.1);
+  border-color: rgba(200, 169, 106, 0.3);
+  color: rgba(200, 169, 106, 0.9);
+  transform: scale(1.05);
+}
+
+.expert-nav:active {
+  transform: scale(0.95);
+}
+
+.expert-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.expert-nav svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.expert-nav:hover:not(:disabled) svg {
+  transform: scale(1.1);
+}
+
+/* Mobile navigation adjustments */
+@media (max-width: 768px) {
+  .expert-nav {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .expert-nav svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* CRITICAL MOBILE FIX: Force images to display on mobile */
+  .lx-carousel-container {
+    padding: 2rem 0.5rem !important;
+    justify-content: center !important;
+  }
+  
+  .lx-carousel {
+    margin: 0 auto !important;
+    max-width: calc(280px + 2rem) !important;
+  }
+  
+  .lx-carousel-track {
+    justify-content: center !important;
+    padding: 0 1rem !important;
+  }
+  
+  .lx-carousel .lx-slide {
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    height: 280px !important;
+    min-height: 280px !important;
+  }
+  
+  .lx-carousel .lx-card {
+    width: 280px !important;
+    height: 280px !important;
+    min-height: 280px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  .lx-carousel .lx-card__media {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+    display: block !important;
+  }
+  
+  .lx-carousel .lx-card__media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+/* ================================================================
+   PROGRESS INDICATORS
+   ================================================================ */
+
+.expert-indicators {
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  z-index: 5;
+}
+
+.expert-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.expert-indicator.active {
+  background: rgba(200, 169, 106, 0.8);
+  transform: scale(1.2);
+}
+
+.expert-indicator:hover {
+  background: rgba(200, 169, 106, 0.6);
+  transform: scale(1.1);
+}
+
+/* ================================================================
+   RESPONSIVE LAYOUT SYSTEM
+   ================================================================ */
+
+/* Mobile First - 1 card */
+@media (max-width: 640px) {
+  .expert-carousel-wrapper {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+  
+  .expert-track {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .expert-slide {
+    width: min(280px, calc(100vw - 4rem));
+  }
+}
+
+/* Small tablets - 2 cards */
+@media (min-width: 641px) and (max-width: 768px) {
+  .expert-carousel-wrapper {
+    gap: 1.5rem;
+  }
+  
+  .expert-track {
+    gap: 1.5rem;
+  }
+}
+
+/* Tablets - 2-3 cards */
+@media (min-width: 769px) and (max-width: 1099px) {
+  .expert-carousel-wrapper {
+    gap: 2rem;
+  }
+  
+  .expert-track {
+    gap: 2rem;
+  }
+}
+
+/* Large screens - 3-4 cards */
+@media (min-width: 1100px) {
+  .expert-carousel-wrapper {
+    gap: 2rem;
+  }
+  
+  .expert-track {
+    gap: 2rem;
+  }
+}
+
+/* ================================================================
+   ACCESSIBILITY AND MOTION
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .expert-track,
+  .expert-slide,
+  .expert-media img,
+  .expert-overlay,
+  .expert-nav {
+    transition-duration: 0.01ms !important;
+  }
+  
+  .expert-shimmer {
+    animation: none !important;
+  }
+}
+
+/* Focus styles for accessibility */
+.expert-nav:focus-visible,
+.expert-indicator:focus-visible {
+  outline: 2px solid rgba(200, 169, 106, 0.8);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .expert-slide {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .expert-nav {
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* ================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================================================ */
+
+.expert-carousel {
+  contain: layout style paint;
+}
+
+.expert-slide {
+  contain: layout style paint;
+}
+
+.expert-media img {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 320px;
+}

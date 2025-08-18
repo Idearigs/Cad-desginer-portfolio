@@ -89,6 +89,13 @@
             padding: 1rem 2rem !important;
         }
         
+        /* Mobile-only: Increase text width by reducing side padding */
+        @media (max-width: 768px) {
+            #eventsDisplayContainer:not(:has(img)) > div {
+                padding: 1rem 1rem !important;
+            }
+        }
+        
         /* Text colors for no-events state */
         #eventsDisplayContainer:not(:has(img)) h3 {
             color: #999 !important;
@@ -111,6 +118,7 @@
     <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/luxury.css">
+    <link rel="stylesheet" href="styles/simple-carousel.css">
     
     <!-- SEO Optimization Styles -->
     <style>
@@ -219,7 +227,7 @@
         <div class="hero-overlay">
             <div class="hero-content">
                 <div class="hero-text-animation">
-                    <h1 id="heroTitle" class="hero-title">PRECISION JEWELRY DESIGN</h1>
+                    <h1 id="heroTitle" class="hero-title">PRECISION</h1>
                 </div>
             </div>
             
@@ -332,94 +340,91 @@
     </section>
 
 
-    <!-- Featured Selection Carousel -->
-    <section id="work" class="lx-section" aria-labelledby="featured">
-        <div class="lx-container">
-            <header class="lx-head" data-reveal>
+    <!-- Simple Image Carousel -->
+    <section id="work" class="gallery-section">
+        <div class="gallery-container">
+            <header class="section-header" data-reveal>
                 <p class="overline">FEATURED SELECTION</p>
                 <h2 id="featured" class="lx-title">Artistry</h2>
                 <span class="gold-line" aria-hidden="true"></span>
             </header>
             
-            <div class="lx-carousel-container">
-                <button class="carousel-nav carousel-nav--prev" aria-label="Previous slide">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <div class="lx-carousel">
-                    <div class="lx-carousel-track">
-                        <article class="lx-slide lx-card" data-reveal>
-                    <figure class="lx-card__media">
-                        <img src="images/124627451_10157718853085835_4693871903297397792_o.jpg" alt="Celestial necklace with sapphire centerpiece">
-                        <span class="lx-card__shimmer" aria-hidden="true"></span>
-                    </figure>
-                    <div class="lx-card__overlay">
-                        <div class="lx-card__content">
-                            <p class="lx-card__overline">NECKLACES</p>
-                            <h3 class="lx-card__title">Celestial Arc</h3>
+            <div class="card-carousel" id="cardCarousel">
+                <div class="carousel-wrapper">
+                    <button class="nav-btn prev-btn" id="prevBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15 18L9 12L15 6"/>
+                        </svg>
+                    </button>
+                    
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="images/124627451_10157718853085835_4693871903297397792_o.jpg" alt="Celestial necklace">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-content">
+                                        <p class="card-category">NECKLACES</p>
+                                        <h3 class="card-title">Celestial Arc</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="images/Untitled-1.jpg" alt="Heritage bracelet">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-content">
+                                        <p class="card-category">BRACELETS</p>
+                                        <h3 class="card-title">Heritage Link</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="images/Y 02.jpg" alt="Lumina ring">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-content">
+                                        <p class="card-category">ENGAGEMENT</p>
+                                        <h3 class="card-title">Lumina Solitaire</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="images/001.jpg" alt="Deco cufflinks">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-content">
+                                        <p class="card-category">ACCESSORIES</p>
+                                        <h3 class="card-title">Deco Cufflinks</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="images/01.jpg" alt="Art Nouveau brooch">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-content">
+                                        <p class="card-category">VINTAGE</p>
+                                        <h3 class="card-title">Art Nouveau Brooch</h3>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </article>
-                
-                <article class="lx-slide lx-card" data-reveal>
-                    <figure class="lx-card__media">
-                        <img src="images/Untitled-1.jpg" alt="Heritage link bracelet, vintage-inspired emerald and diamond design">
-                        <span class="lx-card__shimmer" aria-hidden="true"></span>
-                    </figure>
-                    <div class="lx-card__overlay">
-                        <div class="lx-card__content">
-                            <p class="lx-card__overline">BRACELETS</p>
-                            <h3 class="lx-card__title">Heritage Link</h3>
-                        </div>
-                    </div>
-                </article>
-                
-                <article class="lx-slide lx-card" data-reveal>
-                    <figure class="lx-card__media">
-                        <img src="images/Y 02.jpg" alt="Lumina solitaire engagement ring, contemporary diamond design">
-                        <span class="lx-card__shimmer" aria-hidden="true"></span>
-                    </figure>
-                    <div class="lx-card__overlay">
-                        <div class="lx-card__content">
-                            <p class="lx-card__overline">ENGAGEMENT</p>
-                            <h3 class="lx-card__title">Lumina Solitaire</h3>
-                        </div>
-                    </div>
-                </article>
-                
-                <article class="lx-slide lx-card" data-reveal>
-                    <figure class="lx-card__media">
-                        <img src="images/001.jpg" alt="Deco cufflinks, art deco inspired gold design with onyx">
-                        <span class="lx-card__shimmer" aria-hidden="true"></span>
-                    </figure>
-                    <div class="lx-card__overlay">
-                        <div class="lx-card__content">
-                            <p class="lx-card__overline">ACCESSORIES</p>
-                            <h3 class="lx-card__title">Deco Cufflinks</h3>
-                        </div>
-                    </div>
-                </article>
-                
-                <article class="lx-slide lx-card" data-reveal>
-                    <figure class="lx-card__media">
-                        <img src="images/01.jpg" alt="Vintage brooch with Art Nouveau design">
-                        <span class="lx-card__shimmer" aria-hidden="true"></span>
-                    </figure>
-                    <div class="lx-card__overlay">
-                        <div class="lx-card__content">
-                            <p class="lx-card__overline">VINTAGE</p>
-                            <h3 class="lx-card__title">Art Nouveau Brooch</h3>
-                        </div>
-                    </div>
-                        </article>
-                    </div>
+                    
+                    <button class="nav-btn next-btn" id="nextBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 6L15 12L9 18"/>
+                        </svg>
+                    </button>
                 </div>
-                <button class="carousel-nav carousel-nav--next" aria-label="Next slide">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+                
+                <div class="carousel-indicators" id="carouselIndicators"></div>
             </div>
         </div>
     </section>
@@ -429,11 +434,11 @@
         <div class="lx-container">
             <div class="about-content">
                 <div class="about-text" data-reveal>
-                    <h2 class="lx-title">Master Jewelry Designer & CAD Artisan</h2>
+                    <h2 class="lx-title">Master Jewellery & Watch Designer</h2>
                     <div class="about-description">
-                       <p>With over 20 years of experience in <strong>custom jewelry design</strong> and development, I specialize in creating <strong>bespoke engagement rings</strong>, <strong>wedding bands</strong>, and luxury jewelry pieces. My journey began in the traditional goldsmithing workshops of <strong>Colombo, Sri Lanka</strong>, where I learned the sacred art of metalworking from master craftsmen.</p> 
-                       <p>Today, I combine this rich heritage with cutting-edge <strong>CAD design technologies</strong>, creating timeless pieces that honor tradition while embracing innovation. From <strong>diamond rings</strong> to <strong>custom necklaces</strong>, each piece tells a unique story of precision craftsmanship and artistic excellence.</p>
-                       <p>My work has been recognized internationally with prestigious awards including the <strong>2018 Presidential Gold Award</strong> and <strong>2017 Jewellery This USA Award</strong>.</p>
+                       <p>Since 1998, I have been devoted to the art of custom jewelry design, beginning my journey in the traditional goldsmithing workshops of <strong>Colombo, Sri Lanka</strong>. Trained by master craftsmen, I learned the timeless values of precision, patience, and artistry.</p>
+                       <p>Today, I combine this heritage with modern <strong>CAD technology</strong> to create bespoke <strong>engagement rings</strong>, <strong>wedding bands</strong>, and luxury jewelry pieces. Each design is crafted to tell a unique story, blending tradition with innovation.</p>
+                       <p>My work has earned international recognition and prestigious awards, a testament to my commitment to excellence. With over two decades of experience, I continue to craft timeless jewelry that celebrates love, heritage, and individuality.</p>
                     </div>
                     <a href="#contact" class="contact-link">Start Your Custom Design</a>
                 </div>
@@ -558,6 +563,27 @@
                         <p><a href="mailto:hello@chamaljayaratna.com">hello@chamaljayaratna.com</a><br>
                         <a href="tel:+94777783055">+94 77 778 3055</a></p>
                     </div>
+                    
+                    <div class="footer-section">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/chamalcj/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Instagram">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.40s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/eon.com.design" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Facebook">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/in/chamal-jayaratna-24326899/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Connect with us on LinkedIn">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -582,7 +608,7 @@
     <script src="js/contact-form-new.js" defer></script>
     <script src="js/events-simple.js" defer></script>
     <script src="js/hero-animation-new.js"></script>
-    <script src="js/carousel.js"></script>
+    <script src="js/simple-carousel.js"></script>
     <script src="js/mobile-nav.js"></script>
     <script src="scripts/header.js"></script>
     <script src="scripts/reveal.js"></script>

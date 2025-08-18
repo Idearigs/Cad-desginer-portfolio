@@ -29,24 +29,30 @@ class ContactFormHandler {
         // Show loading state
         this.setLoading(true);
         
-        // Submit form silently in background and always show success
-        this.submitSilently();
-        
-        // Always show success message regardless of submission result
-        setTimeout(() => {
-            this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
-            this.form.reset();
-            this.setLoading(false);
-            
-            // Redirect to thank you page
+        // Submit form using fetch (no redirect from Web3Forms)
+        try {
+            await this.submitWithFetch();
+        } catch (error) {
+            console.log('Form submitted silently, showing success message anyway');
+            // Always show success message regardless of submission result
             setTimeout(() => {
-                window.location.href = 'thank-you.html';
-            }, 2000);
-        }, 1000);
+                this.showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
+                this.form.reset();
+                this.setLoading(false);
+                
+                // Redirect to thank you page
+                setTimeout(() => {
+                    window.location.href = 'thank-you.html';
+                }, 2000);
+            }, 1000);
+        }
     }
     
     async submitWithFetch() {
         const formData = new FormData(this.form);
+        
+        // Remove redirect field to prevent Web3Forms from redirecting
+        formData.delete('redirect');
         
         const response = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',

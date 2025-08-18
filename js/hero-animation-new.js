@@ -52,6 +52,9 @@
         heroTitle.style.transform = 'translateY(30px)';
         heroTitle.style.transition = 'all 0.8s ease-out';
         
+        // Move to next text for cycling
+        currentIndex = 1;
+        
         // Animate in the first text
         setTimeout(() => {
             heroTitle.style.opacity = '1';

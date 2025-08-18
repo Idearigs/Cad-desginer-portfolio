@@ -62,13 +62,14 @@
     margin-bottom: 4rem;
 }
 
+.news-header h1,
 .news-header h2 {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     background: linear-gradient(90deg, #c9c9c9, #6b7280);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-weight: 300;
     font-family: 'Playfair Display', serif;
 }
@@ -520,8 +521,10 @@
         padding: 0 1rem;
     }
     
+    .news-header h1,
     .news-header h2 {
         font-size: 2rem;
+        margin-bottom: 2rem;
     }
     
     .news-header p {

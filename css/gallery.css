@@ -30,13 +30,14 @@
     margin-bottom: 4rem;
 }
 
+.gallery-header h1,
 .gallery-header h2 {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     background: linear-gradient(90deg, #c9c9c9, #6b7280);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-weight: 300;
     font-family: 'Playfair Display', serif;
     letter-spacing: 1px;
@@ -125,8 +126,10 @@
         padding: 0 1rem;
     }
     
+    .gallery-header h1,
     .gallery-header h2 {
         font-size: 2rem;
+        margin-bottom: 2rem;
     }
     
     .gallery-header p {

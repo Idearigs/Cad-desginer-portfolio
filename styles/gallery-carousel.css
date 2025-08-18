@@ -1,0 +1,204 @@
+/* Standard Gallery Carousel - Simple & Reliable */
+
+.gallery-section {
+  padding: 6rem 0;
+  background: transparent;
+  border: 3px solid yellow;
+}
+
+.gallery-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Carousel Layout */
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  width: 100%;
+}
+
+.carousel-container {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  width: 100%;
+  min-height: 320px;
+  border: 2px solid blue;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 2rem;
+  transition: transform 0.5s ease;
+  width: max-content;
+}
+
+/* Slides */
+.carousel-slide {
+  flex: 0 0 320px !important;
+  width: 320px !important;
+  height: 320px !important;
+  position: relative !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid red !important;
+  cursor: pointer !important;
+}
+
+.carousel-slide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.3s ease !important;
+  display: block !important;
+}
+
+.carousel-slide:hover img {
+  transform: scale(1.05);
+}
+
+/* Overlay */
+.slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-slide:hover .slide-overlay {
+  opacity: 1;
+}
+
+.slide-category {
+  font-size: 0.75rem;
+  color: rgba(200, 169, 106, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.5rem 0;
+}
+
+.slide-title {
+  font-size: 1.1rem;
+  color: white;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Navigation Buttons */
+.carousel-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+  background: rgba(200, 169, 106, 0.2);
+  border-color: rgba(200, 169, 106, 0.4);
+  transform: scale(1.05);
+}
+
+.carousel-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* Dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: rgba(200, 169, 106, 0.8);
+  transform: scale(1.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 280px;
+    width: 280px;
+    height: 280px;
+  }
+  
+  .carousel-track {
+    gap: 1rem;
+  }
+  
+  .slide-overlay {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 250px;
+    width: 250px;
+    height: 250px;
+  }
+  
+  .slide-overlay {
+    padding: 1rem;
+  }
+}
