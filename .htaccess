@@ -29,6 +29,27 @@ RewriteRule ^(.*)$ $1.html [L]
     AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
+# Video file caching and MIME type configuration
+<IfModule mod_mime.c>
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+</IfModule>
+
+# Cache video files for better performance
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType video/mp4 "access plus 1 month"
+    ExpiresByType video/webm "access plus 1 month"
+</IfModule>
+
+# Headers for video files
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp4|webm)$">
+        Header set Cache-Control "public, max-age=2592000"
+        Header unset ETag
+    </FilesMatch>
+</IfModule>
+
 
 # Security headers for SEO
 <IfModule mod_headers.c>
