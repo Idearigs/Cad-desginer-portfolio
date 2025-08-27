@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Video Test</title>
+    <style>
+        body { margin: 0; padding: 20px; background: #000; }
+        video { width: 100%; max-width: 800px; height: auto; }
+        .debug { color: white; font-family: monospace; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="debug">
+        <h2>Video Loading Test</h2>
+        <div id="status">Loading...</div>
+    </div>
+    
+    <video 
+        id="testVideo"
+        controls 
+        muted 
+        autoplay 
+        loop 
+        playsinline>
+        <source src="./images/video-new.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <script>
+        const video = document.getElementById('testVideo');
+        const status = document.getElementById('status');
+        
+        console.log('Testing video loading...');
+        
+        video.addEventListener('loadstart', () => {
+            status.innerHTML += '<br>✓ Load started';
+            console.log('Video load started');
+        });
+        
+        video.addEventListener('loadedmetadata', () => {
+            status.innerHTML += '<br>✓ Metadata loaded';
+            console.log('Video metadata loaded');
+        });
+        
+        video.addEventListener('loadeddata', () => {
+            status.innerHTML += '<br>✓ Data loaded';
+            console.log('Video data loaded');
+        });
+        
+        video.addEventListener('canplay', () => {
+            status.innerHTML += '<br>✓ Can play';
+            console.log('Video can play');
+        });
+        
+        video.addEventListener('playing', () => {
+            status.innerHTML += '<br>✓ Playing!';
+            console.log('Video is playing');
+        });
+        
+        video.addEventListener('error', (e) => {
+            status.innerHTML += '<br>❌ Error: ' + (video.error ? video.error.message : 'Unknown error');
+            console.error('Video error:', e, video.error);
+        });
+        
+        // Try to load the video
+        video.load();
+    </script>
+</body>
+</html>
