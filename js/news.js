@@ -129,9 +129,11 @@ class NewsPage {
                     <img src="${imageSrc}" alt="${this.escapeHtml(article.title)}" onerror="this.src='images/placeholder.svg'">
                 </div>
                 <div class="news-content">
-                    <span class="news-date">${this.formatDate(article.date)}</span>
-                    <h3>${this.escapeHtml(article.title)}</h3>
-                    <p>${this.getExcerpt(article.content, 120)}</p>
+                    <div class="news-content-main">
+                        <span class="news-date">${this.formatDate(article.date)}</span>
+                        <h3>${this.escapeHtml(article.title)}</h3>
+                        <p>${this.getExcerpt(article.content, 120)}</p>
+                    </div>
                     <a href="news-details.html?id=${article.id}" class="news-link">Read More <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                 </div>
             `;
